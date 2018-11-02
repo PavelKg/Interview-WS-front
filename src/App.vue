@@ -10,6 +10,6 @@ export default {
 }
 </script>
 
-<style>
-#app {}
+<style lang="scss">
+@import "./assets/styles";
 </style>

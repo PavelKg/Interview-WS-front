@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './home'
-import Interview from './interview'
+import Applicant from '../hub/applicant'
+import Management from '../hub/management'
 import Login from './login'
 
 Vue.use(Router)
@@ -31,10 +32,14 @@ export default new Router({
       component: Home
     },
     {
-      path: '/interview',
-      name: 'Interview',
-      component: Interview
-      // beforeEnter: ifAuthenticated,
+      path: '/',
+      name: 'Management',
+      component: Management
+    },
+    {
+      path: '/',
+      name: 'Applicant',
+      component: Applicant
     },
     {
       path: '/login',

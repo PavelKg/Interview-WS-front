@@ -11,5 +11,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./assets/styles";
+  @import "./assets/styles";
+  body {
+    background-color: white;
+    overflow: auto;
+    font-family: Arial, Helvetica, sans-serif;
+  }
 </style>

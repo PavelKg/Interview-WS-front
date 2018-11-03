@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Home from './home'
+import Interview from './interview'
+import Login from './login'
 
 Vue.use(Router)
 
@@ -18,11 +21,6 @@ Vue.use(Router)
 //   }
 //   next('/login')
 // }
-
-const Home = {template: '<h1>Home</h1>'}
-const Interview = {template: '<h1>Interview</h1>'}
-const Login = {template: '<h1>Login</h1>'}
-// const ErrRoute = {template: '<h1>404</h1>'}
 
 export default new Router({
   mode: 'history',

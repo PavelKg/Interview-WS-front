@@ -7,13 +7,13 @@ export const locales = [
     dir: 'ltr'
   },
   {
-    code: 'he',
-    name: 'עִברִית',
-    dir: 'rtl'
+    code: 'ru',
+    name: 'Русский',
+    dir: 'ltr'
   },
   {
-    code: 'ja',
-    name: '日本語',
+    code: 'jp',
+    name: 'Japan',
     dir: 'ltr'
   }
 ]

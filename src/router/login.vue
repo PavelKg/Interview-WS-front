@@ -12,22 +12,22 @@
       <div class="field-container">
         <div id="company_id" class="field-row">
           <label>{{ $t("message.company_id") }}</label>
-          <input id="company_id"/>
+          <input id="company_id" required v-model="companyId"/>
           <div class="right_space"/>
         </div>
         <div id="user_id" class="field-row">
           <label>{{ $t("message.personal_id") }}</label>
-          <input id="personal_id"/>
+          <input id="personal_id" required v-model="personalId"/>
           <div class="right_space"/>
         </div>
         <div id="password" class="field-row">
           <label>{{ $t("message.password") }}</label>
-          <input id="password"/>
+          <input id="password" required v-model="password"/>
           <div class="right_space"/>
         </div>
       </div>
       <div class='button-container'>
-        <button type="submit" v-on:click="switchLocale()">{{ $t("message.btnLogin") }}</button>
+        <button type="submit">{{ $t("message.btnLogin") }}</button>
       </div>
       </form>
       <a href="#" class="password-recovery">{{ $t("message.lnkPassRec")}}</a>
@@ -39,13 +39,22 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      companyId: 'company Id',
+      personalId: 'personal Id',
+      password: 'password',
+    }
+  },
   mounted () {
     this.$store.commit('INIT_LANG')
   },
   methods: {
     login() {
-      const { username, password } = this
-      //this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
+      console.log('LOGIN-VUE')
+      const {personalId, companyId, password} = this
+        this.$store.dispatch('login', {personalId, companyId, password})
+        //.then(() => {
       //this.$router.push('/')
       //})
     },

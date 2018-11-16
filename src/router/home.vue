@@ -1,7 +1,7 @@
 <template>
 <div id="home">
   <img src="../assets/images/intervieW.png" class="avatar">
-  <div class="link">login</div>
+  <router-link :to="'login'">Login</router-link>
 </div>  
 </template>
 
@@ -16,6 +16,7 @@
     justify-content: center;
     height: 300px;
     flex-flow: column;
+    padding-top: 150px;
     image {
       padding: 50px 0;
     }

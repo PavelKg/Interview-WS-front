@@ -4,6 +4,7 @@ import Home from './home'
 import Applicant from '../hub/applicant'
 import Management from '../hub/management'
 import Login from './login'
+import NotFound from '../components/NotFound.vue'
 
 Vue.use(Router)
 
@@ -29,7 +30,8 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      redirect: '/login'
+      // component: Home
     },
     {
       path: '/',
@@ -46,6 +48,10 @@ export default new Router({
       name: 'Login',
       component: Login
       // beforeEnter: ifNotAuthenticated,
+    },
+    {
+      path: '*',
+      component: NotFound
     }
   ]
 })

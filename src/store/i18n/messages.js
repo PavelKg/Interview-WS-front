@@ -5,14 +5,16 @@ const messages = {
       personal_id: 'Personal ID',
       password: 'Password',
       btnLogin: 'LOGIN',
-      lnkPassRec: 'Forgot Your ID/Password ?'
+      lnkPassRec: 'Forgot Your ID/Password ?',
+      authError: 'Authorization error'
     }
   },
   ru: {
     message: {
       company_id: 'ID Компании',
       personal_id: 'Персональный ID',
-      password: 'Пароль'
+      password: 'Пароль',
+      authError: 'Ошибка авторизации'
     }
   },
   jp: {

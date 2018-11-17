@@ -12,19 +12,22 @@
       <div class="field-container">
         <div id="company_id" class="field-row">
           <label>{{ $t("message.company_id") }}</label>
-          <input id="company_id" required v-model="companyId"/>
+          <input id="company_id" required :placeholder="placeholder('company ID')" @input="handleInput('companyId', $event.target.value)"/>
           <div class="right_space"/>
         </div>
         <div id="user_id" class="field-row">
           <label>{{ $t("message.personal_id") }}</label>
-          <input id="personal_id" required v-model="personalId"/>
+          <input id="personal_id" required :placeholder="placeholder('personal ID')" @input="handleInput('personalId',$event.target.value)"/>
           <div class="right_space"/>
         </div>
         <div id="password" class="field-row">
           <label>{{ $t("message.password") }}</label>
-          <input id="password" required v-model="password"/>
+          <input id="password" type="password" required :placeholder="placeholder('password')" :value="password" @input="handleInput('password', $event.target.value)"/>
           <div class="right_space"/>
         </div>
+      </div>
+      <div class="errMess">
+        <span>{{$t(errMessage)}}</span>
       </div>
       <div class='button-container'>
         <button type="submit">{{ $t("message.btnLogin") }}</button>
@@ -43,7 +46,8 @@ export default {
     return {
       companyId: 'company Id',
       personalId: 'personal Id',
-      password: 'password',
+      password: '',
+      errMessage: ''
     }
   },
   mounted () {
@@ -51,24 +55,41 @@ export default {
   },
   methods: {
     login() {
-      console.log('LOGIN-VUE')
+      this.errMessage = ''
       const {personalId, companyId, password} = this
-        this.$store.dispatch('login', {personalId, companyId, password})
-        //.then(() => {
-      //this.$router.push('/')
-      //})
+
+      this.$store.dispatch('LOGIN', { personalId, companyId, password })
+      .then(() => {
+        if (this.authStatus === 'success') {
+          this.$store.dispatch('USER_ROLE').then( () => {
+
+          })  
+        } else if (this.authStatus === 'error'){
+          this.errMessage = 'message.authError'
+        }
+        this.password = ''
+        //this.$router.push('/')
+    })
+
     },
     switchLocale (code) {
       this.$i18n.locale = code
     },
+    placeholder(item) {
+      return `Enter you ${item}`
+    },
+    handleInput(elem, value) {
+      this[elem] = value;
+    },
   },
   computed: {
     ...mapGetters([
-      'locales'
+      'locales',
+      'authStatus'
     ]),
     activeLocale () {
         return this.$i18n.locale 
-    }
+    },
   }  
 }
 </script>
@@ -156,6 +177,17 @@ export default {
   .password-recovery{
     display: flex;
     justify-content: center;    
+  }
+
+  .errMess {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+    height: 10px;
+    span {
+      color: red;
+      text-align: right;
+    }
   }
 
 </style>

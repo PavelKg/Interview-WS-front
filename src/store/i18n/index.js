@@ -10,7 +10,6 @@ export default {
   actions: {},
   mutations: {
     INIT_LANG: (state) => {
-      console.log(locales)
       state.lang.locales = [...locales]
       state.lang.active = defaultLocale
     },

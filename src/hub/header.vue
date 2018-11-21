@@ -2,8 +2,11 @@
   <div class='header'>
     <div class='app-title'>{{ $t('message.appHeader') }}</div>
     <div class='user-info'>
-      <img src="../assets/images/acc-circle-white-24dp.png" class="user-logo">
+      <img @click="open_user_info" src="../assets/images/acc-circle-white-24dp.png" class="user-logo">
       <span>{{user_name}}</span>
+    </div>
+    <div v-if="user_info_block_open" @click="user_logout" class='user_info_block'>
+      <span class='btn-logout'>{{$t("message.logOut")}}</span>
     </div>
   </div>  
 </template>
@@ -15,7 +18,19 @@
     props: {},
     name: "headerArea",
     data() {
-      return {}
+      return {
+        user_info_block_open: false
+      }
+    },
+    methods: {
+      open_user_info() {
+        this.user_info_block_open = !this.user_info_block_open
+      },
+      user_logout() {
+        this.$store.dispatch('LOGOUT').then(() => {
+          this.$router.push(`/`)
+        })
+      }
     },
     computed: {
       ...mapGetters([
@@ -63,8 +78,31 @@
 
   }
   .user-logo {
+    cursor: pointer;
     padding: 2px 0;
     width: auto;
+  }
+}
+.user_info_block {
+  position:absolute;
+  display:flex;
+  top: 52px;
+  right: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0,0,0,.2);
+  width: 120px;
+  height: 30px;
+  align-self: center;
+  justify-content: center;
+  background: #fafafa;
+  &:hover {
+    background:#fff;
+  }
+  .btn-logout {
+    align-self: center;
+    cursor: default;
+    text-decoration: none;
+    color: #464a4f;
   }
 }
 </style>

@@ -7,7 +7,8 @@ const messages = {
       password: 'Password',
       btnLogin: 'LOGIN',
       lnkPassRec: 'Forgot Your ID/Password ?',
-      authError: 'Authorization error'
+      authError: 'Authorization error',
+      logOut: 'Log out'
     }
   },
   ru: {
@@ -16,7 +17,8 @@ const messages = {
       company_id: 'ID Компании',
       personal_id: 'Персональный ID',
       password: 'Пароль',
-      authError: 'Ошибка авторизации'
+      authError: 'Ошибка авторизации',
+      logOut: 'Выход'
     }
   },
   jp: {

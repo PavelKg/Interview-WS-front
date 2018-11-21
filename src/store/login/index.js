@@ -45,7 +45,6 @@ export default {
     AUTH_LOGOUT: state => {
       state.status = ''
       state.token = ''
-      state.user_role = ''
     }
   },
   getters: {

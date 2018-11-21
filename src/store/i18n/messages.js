@@ -1,6 +1,7 @@
 const messages = {
   en: {
     message: {
+      appHeader: 'Online Interview',
       company_id: 'Company ID',
       personal_id: 'Personal ID',
       password: 'Password',
@@ -11,6 +12,7 @@ const messages = {
   },
   ru: {
     message: {
+      appHeader: 'Online Interview',
       company_id: 'ID Компании',
       personal_id: 'Персональный ID',
       password: 'Пароль',

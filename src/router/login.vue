@@ -61,8 +61,8 @@ export default {
       this.$store.dispatch('LOGIN', { personalId, companyId, password })
       .then(() => {
         if (this.authStatus === 'success') {
-          this.$store.dispatch('USER_ROLE').then( () => {
-
+          this.$store.dispatch('GET_USER_INFO').then( () => {
+            this.$router.push(`/${this.user_role}`)
           })  
         } else if (this.authStatus === 'error'){
           this.errMessage = 'message.authError'
@@ -85,7 +85,9 @@ export default {
   computed: {
     ...mapGetters([
       'locales',
-      'authStatus'
+      'authStatus',
+      'user',
+      'user_role'
     ]),
     activeLocale () {
         return this.$i18n.locale 

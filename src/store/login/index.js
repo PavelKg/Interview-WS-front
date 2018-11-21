@@ -3,8 +3,7 @@ import Api from '@/api'
 export default {
   state: {
     token: localStorage.getItem('int-token') || '',
-    status: '',
-    user_role: ''
+    status: ''
   },
   actions: {
     async LOGIN ({ commit }, formData) {
@@ -29,10 +28,6 @@ export default {
       localStorage.removeItem('int-token')
       Api.delHeaderAuth()
       commit('AUTH_LOGOUT', null)
-    },
-    async USER_ROLE ({ commit }) {
-      const userRole = await Api.role()
-      commit('USER_ROLE_SET', userRole)
     }
   },
   mutations: {
@@ -41,6 +36,7 @@ export default {
     },
     AUTH_SUCCESS: (state, token) => {
       state.token = token
+      console.log(token)
       state.status = 'success'
     },
     AUTH_ERROR: state => {
@@ -50,15 +46,10 @@ export default {
       state.status = ''
       state.token = ''
       state.user_role = ''
-    },
-    USER_ROLE_SET: (state, role) => {
-      state.user_role = role
     }
-
   },
   getters: {
     token: state => state.token,
-    user_role: state => state.user_role,
     isAuthenticated: state => !!state.token,
     authStatus: state => state.status
   }

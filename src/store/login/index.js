@@ -2,8 +2,8 @@ import Api from '@/api'
 
 export default {
   state: {
-    token: localStorage.getItem('int-token') || '',
-    status: ''
+    token: localStorage.getItem('iws-token') || '',
+    authStatus: ''
   },
   actions: {
     async LOGIN ({ commit }, formData) {
@@ -13,43 +13,46 @@ export default {
         const resp = await Api.login({personalId, companyId, password})
         const { code } = resp.data
         if (code === 200) {
-          localStorage.setItem('int-token', resp.data.token)
-          Api.setHeaderAuth(resp.data.token)
+          localStorage.setItem('iws-token', resp.data.token)
           commit('AUTH_SUCCESS', resp.data.token)
+          commit('SET_HEADER_AUTH')
         } else {
           throw Error('Authorization error')
         }
       } catch (err) {
         commit('AUTH_ERROR', err)
-        localStorage.removeItem('int-token') // if the request fails, remove any possible user token if possible
+        localStorage.removeItem('iws-token') // if the request fails, remove any possible user token if possible
       }
     },
     async LOGOUT ({ commit }) {
-      localStorage.removeItem('int-token')
+      localStorage.removeItem('iws-token')
       Api.delHeaderAuth()
       commit('AUTH_LOGOUT', null)
     }
   },
   mutations: {
     AUTH_REQUEST: state => {
-      state.status = 'loading'
+      state.authStatus = 'loading'
     },
     AUTH_SUCCESS: (state, token) => {
       state.token = token
       console.log(token)
-      state.status = 'success'
+      state.authStatus = 'success'
     },
     AUTH_ERROR: state => {
-      state.status = 'error'
+      state.authStatus = 'error'
     },
     AUTH_LOGOUT: state => {
-      state.status = ''
+      state.authStatus = ''
       state.token = ''
+    },
+    SET_HEADER_AUTH: state => {
+      Api.setHeaderAuth(state.token)
     }
   },
   getters: {
     token: state => state.token,
     isAuthenticated: state => !!state.token,
-    authStatus: state => state.status
+    authStatus: state => state.authStatus
   }
 }

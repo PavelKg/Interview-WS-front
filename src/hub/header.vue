@@ -46,7 +46,7 @@
 
 <style lang="scss">
 .header {
-  position: absolute;
+  //position: absolute;
   display: flex;
   flex-direction: row;
   width: 100%;

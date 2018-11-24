@@ -2,13 +2,16 @@ import Api from '@/api'
 
 export default {
   state: {
-    user: JSON.parse(localStorage.getItem('int-userinfo')) || ''
+    user: ''
   },
   actions: {
-    async GET_USER_INFO ({ commit }) {
-      const result = await Api.user_info()
-      localStorage.setItem('int-userinfo', JSON.stringify(result.data.user_info))
-      commit('SET_USER', result.data.user_info)
+    async GET_USER_INFO ({ commit, dispatch }) {
+      try {
+        const result = await Api.user_info()
+        commit('SET_USER', result.data.user_info)
+      } catch (e) {
+        dispatch('LOGOUT', null, { root: true })
+      }
     }
   },
   mutations: {

@@ -1,6 +1,6 @@
 <template>
 <div id="home">
-  <img src="../assets/images/intervieW.png" class="avatar">
+  <img src="../assets/images/IntervieW.png" class="avatar">
   <router-link :to="'login'">Login</router-link>
 </div>  
 </template>

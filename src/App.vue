@@ -14,7 +14,9 @@ export default {
   @import "./assets/styles";
   body {
     background-color: white;
-    overflow: auto;
+    margin: 0; 
+    height: 100%; 
+    overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
   }
 </style>

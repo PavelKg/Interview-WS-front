@@ -1,5 +1,8 @@
 const messages = {
   en: {
+    menu: {
+      home: 'HOME'
+    },
     message: {
       appHeader: 'Online Interview',
       company_id: 'Company ID',
@@ -12,6 +15,9 @@ const messages = {
     }
   },
   ru: {
+    menu: {
+      home: 'ГЛАВНАЯ'
+    },
     message: {
       appHeader: 'Online Interview',
       company_id: 'ID Компании',
@@ -22,6 +28,9 @@ const messages = {
     }
   },
   jp: {
+    menu: {
+      home: 'Home'
+    },
     message: {}
   }
 }

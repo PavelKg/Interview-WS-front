@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import VueI18n from 'vue-i18n'
 import messages from './store/i18n/messages'
+import dirClickOutside from './directive/click-outside'
 
 Vue.use(VueI18n)
 const i18n = new VueI18n({
@@ -13,9 +14,10 @@ const i18n = new VueI18n({
   fallbackLocale: 'en',
   messages: messages, // set locale messages
   silentTranslationWarn: true
-
 })
 
+Vue.directive('click-outside', dirClickOutside)
+ 
 require('es6-promise').polyfill()
 
 Vue.config.productionTip = false

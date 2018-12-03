@@ -19,6 +19,9 @@
       headerArea,
       superMenu,
       superContent
+    },
+    created() {
+      this.$store.dispatch('GET_COMPANY_LIST')
     }
   }
 </script>
@@ -36,11 +39,9 @@
   }
   .content-zone {
     display: flex;
-    flex-grow: 15;
+    flex-grow: 20;
     overflow: auto;
-    div {
-      height: 300vh;
-    }
+    background-color: #ffffff;
   }
 }
 </style>

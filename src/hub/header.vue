@@ -5,7 +5,7 @@
       <img @click="open_user_info" src="../assets/images/acc-circle-white-24dp.png" class="user-logo">
       <span>{{user_name}}</span>
     </div>
-    <div v-if="user_info_block_open" @click="user_logout" class='user_info_block'>
+    <div v-if="user_info_block_open" @click="user_logout" class='user_info_block' v-click-outside="handleClickOutside">
       <span class='btn-logout'>{{$t("message.logOut")}}</span>
     </div>
   </div>  
@@ -30,6 +30,9 @@
         this.$store.dispatch('LOGOUT').then(() => {
           this.$router.push(`/`)
         })
+      },
+      handleClickOutside() {
+        this.user_info_block_open = false  
       }
     },
     computed: {
@@ -46,7 +49,6 @@
 
 <style lang="scss">
 .header {
-  //position: absolute;
   display: flex;
   flex-direction: row;
   width: 100%;

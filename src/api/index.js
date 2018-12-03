@@ -24,6 +24,10 @@ export default {
     return Api.post(`/login`, { personal_id: personalId, company_id: companyId, password })
   },
   user_info () {
-    return Api.get(`/user_info`)
+    return Api.get(`/user`)
+  },
+  companies () {
+    return Api.get(`/companies`)
   }
+
 }

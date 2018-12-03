@@ -1,7 +1,6 @@
 <template>
 <div class='menu-table'>
   <div class='menu-item'>{{$t('menu.home')}}</div>
-  <div class='menu-item'><span>HGHGHGJHJdfghdfhfghfgh</span></div>
 </div>  
 </template>
 
@@ -18,6 +17,7 @@
   flex-direction: column;
   flex: 1 1 0;
   .menu-item {
+      font-size: 20px;
       padding: 15px 5px;
       color: white;
       span {

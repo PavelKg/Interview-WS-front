@@ -3,6 +3,9 @@ const messages = {
     menu: {
       home: 'HOME'
     },
+    company: {
+      name: 'Name'
+    },
     message: {
       appHeader: 'Online Interview',
       company_id: 'Company ID',
@@ -18,6 +21,9 @@ const messages = {
     menu: {
       home: 'ГЛАВНАЯ'
     },
+    company: {
+      name: 'Название'
+    },
     message: {
       appHeader: 'Online Interview',
       company_id: 'ID Компании',
@@ -30,6 +36,9 @@ const messages = {
   jp: {
     menu: {
       home: 'Home'
+    },
+    company: {
+      name: 'Name'
     },
     message: {}
   }

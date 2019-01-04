@@ -17,6 +17,9 @@
   export default {
     props: {},
     name: "headerArea",
+    mounted() {
+      this.$store.dispatch('LOAD_USER_MENU', this.user_role)
+    },
     data() {
       return {
         user_info_block_open: false
@@ -37,7 +40,8 @@
     },
     computed: {
       ...mapGetters([
-        'user'
+        'user',
+        'user_role'
       ]),
       user_name() {
         return this.user.name

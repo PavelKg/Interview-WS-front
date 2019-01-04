@@ -1,7 +1,16 @@
 const messages = {
   en: {
     menu: {
-      home: 'HOME'
+      home: 'HOME',
+      company: 'Co mgmt',
+      comp_add: 'Add Co',
+      comp_videos: 'Videos',
+      email: 'Mail BOX',
+      email_make: 'template Make',
+      email_check: 'template Ckeck',
+      settings: 'Settings',
+      admin_list: 'Administrator list',
+      admin_add: 'Administrator add'
     },
     company: {
       name: 'Name'
@@ -19,7 +28,16 @@ const messages = {
   },
   ru: {
     menu: {
-      home: 'ГЛАВНАЯ'
+      home: 'ГЛАВНАЯ',
+      company: 'Компании',
+      comp_add: 'Добавить компанию',
+      comp_videos: 'Видео',
+      email: 'Почта',
+      email_make: 'template Make',
+      email_check: 'template Ckeck',      
+      settings: 'Параметры',
+      admin_list: 'Список администраторов',
+      admin_add: 'Добавить администратора'      
     },
     company: {
       name: 'Название'
@@ -35,7 +53,16 @@ const messages = {
   },
   jp: {
     menu: {
-      home: 'Home'
+      home: 'Home',
+      company: 'Co mgmt',
+      comp_add: 'Add Co',
+      comp_videos: 'Videos',
+      email: 'Mail BOX',
+      email_make: 'template Make',
+      email_check: 'template Ckeck',      
+      settings: 'Settings',
+      admin_list: 'Administrator list',
+      admin_add: 'Administrator add'      
     },
     company: {
       name: 'Name'

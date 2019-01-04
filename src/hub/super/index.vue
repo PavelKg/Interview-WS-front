@@ -10,7 +10,7 @@
 
 <script>
   import headerArea from '../header'
-  import superMenu from './menu'
+  import superMenu from '../menu/'
   import superContent from './content'
 
   export default {

@@ -15,8 +15,7 @@ const ifNotAuthenticated = (to, from, next) => {
     next()
     return
   }
-  const isAuth = !!store.getters.authStatus
-  console.log('isAuth=', isAuth)
+  const isAuth = store.getters.authStatus === 'success'
   if (isAuth) {
     next(`/${store.getters.user_role}`)
   } else {
@@ -31,7 +30,7 @@ const ifNotAuthenticated = (to, from, next) => {
 
 const ifAuthenticated = (to, from, next) => {
   if (store.getters.isAuthenticated) {
-    const isAuth = !!store.getters.authStatus
+    const isAuth = store.getters.authStatus === 'success'
     if (!isAuth) {
       store.commit('SET_HEADER_AUTH')
       store.dispatch('GET_USER_INFO').then(() => {

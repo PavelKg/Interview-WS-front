@@ -52,7 +52,7 @@ export default {
   },
   getters: {
     token: state => state.token,
-    isAuthenticated: state => !!state.token,
+    isAuthenticated: state => Boolean(state.token),
     authStatus: state => state.authStatus
   }
 }

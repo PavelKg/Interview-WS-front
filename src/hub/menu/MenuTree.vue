@@ -1,14 +1,16 @@
 <template>
-  <div class="menu-item">
-    <div class="menu-item-name" @click="handleClick(node)">
+  <div v-if="node" class="menu-item">
+    <div class="menu-item-name" @click="handleClick(node, myKey)">
       <span v-if="node.caption" class="caption">{{$t(node.caption)}}</span>
       <div v-if="node.isSection" class="triangle-bottom" :class="{triangleActive: node.isOpen}"/>
+      <div v-if="myKey === userMenuActiveItem" class="triangleSelected"/>
     </div>
-    <div v-if="node.subItems && node.subItems.length && node.isOpen">
+    <div v-if="node.subItems && node.isOpen">
       <node
-        v-for="subItems in node.subItems"
-        :node="subItems"
-        :key="subItems.type"
+        v-for="(value, key) in node.subItems"
+        :node="value"
+        :key="key"
+        :myKey="myKey+'.subItems.'+key"
         :handle-click="handleClick"
       ></node>
     </div>
@@ -16,6 +18,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'node',
   data() {
@@ -25,13 +29,16 @@ export default {
   },
   props: {
     node: Object,
-    ind: Number,
+    myKey: String,
     handleClick: Function
   },
   mounted() {
     //console.log('this.$props.node=', this.$props.node);
   },
   methods: {
+  },
+  computed: {
+  ...mapGetters(['userMenuActiveItem'])
   }
 };
 </script>
@@ -66,9 +73,22 @@ export default {
       }
     }
   }
-
   .triangleActive {
     transform: rotate(180deg);
+  }
+  .triangleSelected {
+    transform: rotate(90deg);
+    &:before {
+      position: relative;
+      right: 0;
+      top: 0px;
+      color: #999;
+      margin-top: 4px;
+      border-style: solid;
+      border-width: 5px 5px 0;
+      border-color: #fff transparent transparent;
+      content: '';
+    }
   }
   .sub-menu-item {
     display: flex;

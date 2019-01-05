@@ -1,60 +1,69 @@
+const findPropByName = function (obj, path) {
+  const paths = path.split('.')
+  let current = obj
+  for (let i = 0; i < paths.length; i += 1) {
+    if (current[paths[i]] === undefined) {
+      return undefined
+    } else {
+      current = current[paths[i]]
+    }
+  }
+  return current
+}
+
 const menuStructure = {
   super: {
-    isOpen: true,
-    subItems: [
-      {
-        type: 'home',
-        caption: 'menu.home',
-      },
-      {
-        type: 'company',
-        caption: 'menu.company',
-        isSection: true,
-        subItems: [
-          {
-            type: 'company.add',
-            caption: 'menu.comp_add'
+    root: {
+      isOpen: true,
+      activeItem: 'root.subItems.home',
+      caption: '',
+      subItems: {
+        home: {
+          caption: 'menu.home'
+        },
+        company: {
+          caption: 'menu.company',
+          isSection: true,
+          subItems: {
+            add: {
+              type: 'company.add',
+              caption: 'menu.comp_add'
+            },
+            videos: {
+              type: 'company.videos',
+              caption: 'menu.comp_videos'
+            }
           },
-          {
-            type: 'company.videos',
-            caption: 'menu.comp_videos'
-          }
-        ],
-        isOpen: false
-      },
-      {
-        type: 'email',
-        isSection: true,
-        caption: 'menu.email',
-        subItems: [
-          {
-            type: 'email.make',
-            caption: 'menu.email_make'
+          isOpen: false
+        },
+        email: {
+          isSection: true,
+          caption: 'menu.email',
+          subItems: {
+            make: {
+              caption: 'menu.email_make'
+            },
+            check: {
+              caption: 'menu.email_check'
+            }
           },
-          {
-            type: 'email.check',
-            caption: 'menu.email_check'
+          isOpen: false
+        },
+        settings: {
+          isSection: true,
+          isOpen: false,
+          caption: 'menu.settings',
+          subItems: {
+            adminList: {
+              caption: 'menu.admin_list'
+            },
+            adminAdd: {
+              caption: 'menu.admin_add'
+            }
           }
-        ],
-        isOpen: false
-      },
-      {
-        type: 'settings',
-        isSection: true,
-        caption: 'menu.settings',
-        subItems: [
-          {
-            type: 'settings.admin_list',
-            caption: 'menu.admin_list'
-          },
-          {
-            type: 'settings.admin_add',
-            caption: 'menu.admin_add'
-          }
-        ],
-        isOpen: false
+        }
       }
-    ]
+    }
   },
   administrator: [],
   applicant: []
@@ -62,29 +71,33 @@ const menuStructure = {
 
 export default {
   state: {
-    menu: {}
+    menu: {
+      root: {
+        activeItem: false
+      }
+    }
   },
   actions: {
     LOAD_MENU_STATE: ({commit}) => {
-      let menu = []
       if (localStorage.getItem('iws-app.menu')) {
         try {
-          menu = JSON.parse(localStorage.getItem('iws-app.menu')).subItems
+          const menu = JSON.parse(localStorage.getItem('iws-app.menu'))
+          if (menu !== {}) {
+            commit('SET_USER_MENU', menu)
+          }
         } catch (e) {
           localStorage.removeItem('iws-app.menu')
         }
       }
-      menu.forEach((element, index) => {
-        if (element.isOpen) {
-          commit('SECTION_STATE', index)
-        }
-      })
     },
     SAVE_MENU_STATE: ({state}) => {
       localStorage.setItem('iws-app.menu', JSON.stringify(state.menu))
     },
-    LOAD_USER_MENU: ({commit}, userMenuType) => {
+    LOAD_USER_MENU: ({ commit, dispatch }, userMenuType) => {
       commit('SET_USER_MENU', menuStructure[userMenuType])
+      commit('ITEM_STATE', 'root.subItems.home')
+      dispatch('LOAD_MENU_STATE')
+      dispatch('SAVE_MENU_STATE')
     }
   },
   mutations: {
@@ -92,12 +105,17 @@ export default {
       state.menu = userMenu
     },
     SECTION_STATE: (state, section) => {
-      const sectionTree = section.split('.')
-      console.log('section=', sectionTree)
-      //state.menu.subItems[index].isOpen = !state.menu.subItems[index].isOpen
+      let sec = findPropByName(state.menu, section)
+      if (sec.isSection) {
+        sec.isOpen = !sec.isOpen
+      }
+    },
+    ITEM_STATE: (state, item) => {
+      state.menu.root.activeItem = item
     }
   },
   getters: {
-    userMenu: state => state.menu
+    userMenu: state => state.menu,
+    userMenuActiveItem: state => state.menu.root.activeItem
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="menu-table">
-    <menu-tree :node="userMenu" :handle-click="handleClick"></menu-tree>
+    <menu-tree :node="menuItems" :myKey="'root'" :handle-click="handleClick"></menu-tree>
   </div>
 </template>
 
@@ -14,7 +14,8 @@ export default {
     MenuTree
   },
   mounted() {
-    this.$store.dispatch('LOAD_MENU_STATE')
+    //this.$store.dispatch('LOAD_MENU_STATE')
+    //console.log(this.userMenu)
   },
   data() {
     return {
@@ -22,21 +23,21 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['userMenu']),
+    ...mapGetters(['userMenu', 'userMenuActiveItem']),
     menuItems() {
-      return this.userMenu.subItems
+      return this.userMenu.root
     }
   },
   methods: {
-    handleClick(node) {
-      console.log('ind=', node);
+    handleClick(node, key) {
       if (node.isSection) {
-        this.$store.commit('SECTION_STATE', node.type)
-        //node.isOpen = !node.isOpen;
+        this.$store.commit('SECTION_STATE', key)
+      } else if (!node.isSection) {
+        this.$store.commit('ITEM_STATE', key)
       }
-      //this.$store.commit('SECTION_STATE', ind)
       this.$store.dispatch('SAVE_MENU_STATE')
-    }    
+    }
+    
   }
 };
 </script>  

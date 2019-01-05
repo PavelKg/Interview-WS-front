@@ -26,6 +26,7 @@ export default {
     },
     async LOGOUT ({ commit }) {
       localStorage.removeItem('iws-token')
+      localStorage.removeItem('iws-app.menu')
       Api.delHeaderAuth()
       commit('AUTH_LOGOUT', null)
     }

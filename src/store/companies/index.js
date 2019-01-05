@@ -16,7 +16,7 @@ export default {
   },
   mutations: {
     SET_COMPANY_LIST: (state, companyList) => {
-      state.companies = state.companies.concat(companyList)
+      state.companies = [...companyList]
       console.log(state.companies)
     }
   },

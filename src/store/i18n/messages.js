@@ -8,12 +8,17 @@ const messages = {
       email: 'Mail BOX',
       email_make: 'template Make',
       email_check: 'template Ckeck',
+      email_notification: 'Notif',
       settings: 'Settings',
       admin_list: 'Administrator list',
       admin_add: 'Administrator add'
     },
     company: {
-      name: 'Name'
+      cid: 'ID',
+      name: 'Company name',
+      contract_plan: 'Contract plan',
+      videos: 'Videos',
+      actions: 'Actions'
     },
     message: {
       appHeader: 'Online Interview',
@@ -24,6 +29,9 @@ const messages = {
       lnkPassRec: 'Forgot Your ID/Password ?',
       authError: 'Authorization error',
       logOut: 'Log out'
+    },
+    label: {
+      companyList: 'Company List'
     }
   },
   ru: {
@@ -49,6 +57,9 @@ const messages = {
       password: 'Пароль',
       authError: 'Ошибка авторизации',
       logOut: 'Выход'
+    },
+    label: {
+      companyList: 'Company List'
     }
   },
   jp: {
@@ -67,7 +78,10 @@ const messages = {
     company: {
       name: 'Name'
     },
-    message: {}
+    message: {},
+    label: {
+      companyList: 'Company List'
+    }
   }
 }
 

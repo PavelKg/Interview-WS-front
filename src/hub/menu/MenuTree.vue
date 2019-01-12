@@ -1,5 +1,5 @@
 <template>
-  <div v-if="node" class="menu-item">
+  <div v-if="node && node.visible" class="menu-item">
     <div class="menu-item-name" @click="handleClick(node, myKey)">
       <span v-if="node.caption" class="caption">{{$t(node.caption)}}</span>
       <div v-if="node.isSection" class="triangle-bottom" :class="{triangleActive: node.isOpen}"/>
@@ -32,11 +32,8 @@ export default {
     myKey: String,
     handleClick: Function
   },
-  mounted() {
-    //console.log('this.$props.node=', this.$props.node);
-  },
-  methods: {
-  },
+  mounted() {},
+  methods: {},
   computed: {
   ...mapGetters(['userMenuActiveItem'])
   }
@@ -55,8 +52,6 @@ export default {
   .menu-item-name {
     display: flex;
     flex-direction: row;
-    .caption {
-    }
     .triangle-bottom {
       width: 10px;
       margin-left: auto;
@@ -78,6 +73,8 @@ export default {
   }
   .triangleSelected {
     transform: rotate(90deg);
+    left: 110px;
+    position: absolute;
     &:before {
       position: relative;
       right: 0;
@@ -85,7 +82,7 @@ export default {
       color: #999;
       margin-top: 4px;
       border-style: solid;
-      border-width: 5px 5px 0;
+      border-width: 15px 15px 0;
       border-color: #fff transparent transparent;
       content: '';
     }

@@ -22,7 +22,6 @@
     },
     created() {
       this.$store.dispatch('GET_COMPANY_LIST')
-      console.log('created_index')
     }
   }
 </script>

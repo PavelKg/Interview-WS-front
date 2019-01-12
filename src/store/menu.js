@@ -17,34 +17,54 @@ const menuStructure = {
       isOpen: true,
       activeItem: 'root.subItems.home',
       caption: '',
+      visible: true,
       subItems: {
         home: {
-          caption: 'menu.home'
+          caption: 'menu.home',
+          visible: true
         },
         company: {
           caption: 'menu.company',
           isSection: true,
+          isOpen: false,
+          visible: true,
           subItems: {
             add: {
               type: 'company.add',
-              caption: 'menu.comp_add'
+              caption: 'menu.comp_add',
+              visible: true
+            },
+            edit: {
+              type: 'company.edit',
+              caption: 'menu.comp_edit'
+            },
+            info: {
+              type: 'company.info',
+              caption: 'menu.comp_info'
             },
             videos: {
               type: 'company.videos',
-              caption: 'menu.comp_videos'
+              caption: 'menu.comp_videos',
+              visible: true
             }
-          },
-          isOpen: false
+          }
         },
         email: {
           isSection: true,
           caption: 'menu.email',
+          visible: true,
           subItems: {
             make: {
-              caption: 'menu.email_make'
+              caption: 'menu.email_make',
+              visible: true
             },
             check: {
-              caption: 'menu.email_check'
+              caption: 'menu.email_check',
+              visible: true
+            },
+            notif: {
+              caption: 'menu.email_notification',
+              visible: true
             }
           },
           isOpen: false
@@ -53,12 +73,15 @@ const menuStructure = {
           isSection: true,
           isOpen: false,
           caption: 'menu.settings',
+          visible: true,
           subItems: {
             adminList: {
-              caption: 'menu.admin_list'
+              caption: 'menu.admin_list',
+              visible: true
             },
             adminAdd: {
-              caption: 'menu.admin_add'
+              caption: 'menu.admin_add',
+              visible: true
             }
           }
         }

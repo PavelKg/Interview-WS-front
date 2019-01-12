@@ -2,7 +2,8 @@ import Api from '@/api'
 
 export default {
   state: {
-    companies: []
+    companies: [],
+    activeCompanyId: false
   },
   actions: {
     async GET_COMPANY_LIST ({ commit, dispatch }) {
@@ -17,10 +18,13 @@ export default {
   mutations: {
     SET_COMPANY_LIST: (state, companyList) => {
       state.companies = [...companyList]
-      console.log(state.companies)
+    },
+    SET_ACTIVE_COMPANY: (state, companyId) => {
+      state.activeCompanyId = companyId
     }
   },
   getters: {
-    companies: state => state.companies
+    companies: state => state.companies,
+    activeCompanyId: state => state.activeCompanyId
   }
 }

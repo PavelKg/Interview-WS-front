@@ -18,7 +18,21 @@ const messages = {
       name: 'Company name',
       contract_plan: 'Contract plan',
       videos: 'Videos',
-      actions: 'Actions'
+      actions: 'Actions',
+      basic_information: 'Basic information',
+      contact: 'Contact',
+      address: 'Address',
+      plan: 'Plan',
+      btn_video_capacity_check: 'Video capacity Check',
+      btn_resume_check: 'Resume Check',
+      data_reg: 'Company data registration',
+      data_change: 'Company data change',
+      email: 'Mail address',
+      phone: 'Phone number',
+      depart_and_pos: 'Department and position',
+      zipcode: 'Zip code',
+      contact_name: 'Contact name'
+      
     },
     message: {
       appHeader: 'Online Interview',
@@ -31,7 +45,11 @@ const messages = {
       logOut: 'Log out'
     },
     label: {
-      companyList: 'Company List'
+      companyList: 'Company List',
+      delete: 'Delete',
+      back: 'Back',
+      edit: 'Edit',
+      required: 'Required'
     }
   },
   ru: {

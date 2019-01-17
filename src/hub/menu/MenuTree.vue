@@ -10,7 +10,7 @@
         v-for="(value, key) in node.subItems"
         :node="value"
         :key="key"
-        :myKey="myKey+'.subItems.'+key"
+        :myKey="myKey + '.subItems.' + key"
         :handle-click="handleClick"
       ></node>
     </div>

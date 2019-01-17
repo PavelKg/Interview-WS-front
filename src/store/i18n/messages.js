@@ -31,8 +31,9 @@ const messages = {
       phone: 'Phone number',
       depart_and_pos: 'Department and position',
       zipcode: 'Zip code',
-      contact_name: 'Contact name'
-      
+      contact_name: 'Contact name',
+      btn_genId: 'Automatic assignment',
+      btn_search: 'Search'
     },
     message: {
       appHeader: 'Online Interview',
@@ -49,7 +50,9 @@ const messages = {
       delete: 'Delete',
       back: 'Back',
       edit: 'Edit',
-      required: 'Required'
+      required: 'Required',
+      register: 'Register',
+      change: 'Change'
     }
   },
   ru: {

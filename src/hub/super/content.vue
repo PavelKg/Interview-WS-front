@@ -35,7 +35,8 @@
     },
     methods: {
       contentElementClick(key) {
-        this.$store.commit('ITEM_STATE', key) 
+        this.$store.commit('ITEM_STATE', key)
+        this.$store.dispatch('SAVE_MENU_STATE') 
       }
     },
     components: {

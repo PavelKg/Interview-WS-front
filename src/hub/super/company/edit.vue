@@ -9,18 +9,23 @@
       <span class="label-red-start">*{{$t('label.required')}}</span>
     </div>
     <div class="label">{{$t('company.basic_information')}} <span class="label-red-start">*</span></div>
-    <input
-      id="company_cid"
-      required
-      :placeholder="$t('company.cid')"
-      @input="handleInput('companyId', $event.target.value)"
-    >
-    <input
-      id="company_name"
-      required
-      :placeholder="$t('company.name')"
-      @input="handleInput('companyName', $event.target.value)"
-    >    
+    <div class="flex-row">
+      <input
+        id="company_cid"
+        required
+        :placeholder="$t('company.cid')"
+        @input="handleInput('companyId', $event.target.value)"
+      >
+      <div class="helper-form-button"><span>{{$t('company.btn_genId')}}</span></div>
+    </div>
+    <div class="flex-row">
+      <input
+        id="company_name"
+        required
+        :placeholder="$t('company.name')"
+        @input="handleInput('companyName', $event.target.value)"
+      >    
+    </div>
     <div class="label">{{$t('company.address')}} / {{$t('company.contact')}}</div>
     <div class="flex-row">
       <input
@@ -29,7 +34,7 @@
         :placeholder="$t('company.zipcode')"
         @input="handleInput('companyZipcode', $event.target.value)"
       >    
-      <div class="item"></div>
+      <div class="helper-form-button"><span>{{$t('company.btn_search')}}</span></div>
       <input
         id="company_address"
         required
@@ -79,6 +84,10 @@
         @input="handleInput('companyPhone2', $event.target.value)"
       >          
     </div>
+      <div
+        class="mgn-button blue"
+      >{{$t(this.actionBtnCaption)}}</div>
+    </div>
   </div>
 </template>
 
@@ -91,6 +100,10 @@ export default {
     ...mapGetters(['companies', 'activeCompanyId']),
     formActionIsReg() {
       return this.activeCompanyId === '';
+    },
+    actionBtnCaption() {
+      const label = this.formActionIsReg ? 'label.register' : 'label.change'
+      return label
     }
   }
 };
@@ -123,10 +136,38 @@ export default {
     display: flex;
     padding-bottom: 10px;
   }
-  
   input {
       height: 23px;
       width: 200px;
+      margin-right: 10px;
   }
+  .helper-form-button {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    border: 1px solid #bfc0c2;
+    padding: 3px 7px;
+    margin-right: 10px;
+    background: #d0cece;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid #aeaeaf;
+      background: #aeaeaf;
+    }
+  }
+  .mgn-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin-top: 10px;
+    color: #ffffff;
+  }
+  .blue {
+    background: #4472c4;
+  }
+
 }
 </style>  

@@ -2,29 +2,36 @@
   <div class="company-data">
     <div v-if="formActionIsReg" class="action-name">
       {{$t('company.data_reg')}}
-      <span class="label-red-start"> *{{$t('label.required')}}</span>
+      <span class="label-red-start">*{{$t('label.required')}}</span>
     </div>
     <div v-else class="action-name">
       {{$t('company.data_change')}}
       <span class="label-red-start">*{{$t('label.required')}}</span>
     </div>
-    <div class="label">{{$t('company.basic_information')}} <span class="label-red-start">*</span></div>
+    <div class="label">
+      {{$t('company.basic_information')}}
+      <span class="label-red-start">*</span>
+    </div>
     <div class="flex-row">
       <input
         id="company_cid"
         required
         :placeholder="$t('company.cid')"
-        @input="handleInput('companyId', $event.target.value)"
+        v-model="company_props.cid"
+        @input="handleInput('cid', $event.target.value)"
       >
-      <div class="helper-form-button"><span>{{$t('company.btn_genId')}}</span></div>
+      <div class="helper-form-button">
+        <span>{{$t('company.btn_genId')}}</span>
+      </div>
     </div>
     <div class="flex-row">
       <input
         id="company_name"
         required
         :placeholder="$t('company.name')"
-        @input="handleInput('companyName', $event.target.value)"
-      >    
+        v-model="company_props.name"
+        @input="handleInput('name', $event.target.value)"
+      >
     </div>
     <div class="label">{{$t('company.address')}} / {{$t('company.contact')}}</div>
     <div class="flex-row">
@@ -32,62 +39,68 @@
         id="company_zipcode"
         required
         :placeholder="$t('company.zipcode')"
-        @input="handleInput('companyZipcode', $event.target.value)"
-      >    
-      <div class="helper-form-button"><span>{{$t('company.btn_search')}}</span></div>
+        v-model.number="company_props.zipcode"
+      >
+      <div class="helper-form-button">
+        <span>{{$t('company.btn_search')}}</span>
+      </div>
       <input
         id="company_address"
         required
         :placeholder="$t('company.address')"
-        @input="handleInput('companyAddress', $event.target.value)"
-      >    
+        v-model="company_props.address"
+        @input="handleInput('address', $event.target.value)"
+      >
     </div>
     <div class="flex-row">
       <input
         id="company_department"
         required
         :placeholder="$t('company.depart_and_pos')"
-        @input="handleInput('companyDepartment', $event.target.value)"
-      >    
+        v-model="company_props.department"
+        @input="handleInput('department', $event.target.value)"
+      >
       <input
         id="company_contact"
         required
         :placeholder="$t('company.contact_name')"
-        @input="handleInput('companyContact', $event.target.value)"
-      >          
+        v-model="company_props.contact_name"
+        @input="handleInput('contact_name', $event.target.value)"
+      >
     </div>
     <div class="flex-row">
       <input
         id="company_email1"
         required
         :placeholder="`${$t('company.email')} 1`"
-        @input="handleInput('companyEmail1', $event.target.value)"
-      >    
+        v-model="company_props.email1"
+        @input="handleInput('email1', $event.target.value)"
+      >
       <input
         id="company_email2"
         required
         :placeholder="`${$t('company.email')} 2`"
-        @input="handleInput('companyEmail2', $event.target.value)"
-      >          
+        v-model="company_props.email2"
+        @input="handleInput('email2', $event.target.value)"
+      >
     </div>
     <div class="flex-row">
       <input
         id="company_phone1"
         required
         :placeholder="`${$t('company.phone')} 1`"
-        @input="handleInput('companyPhone1', $event.target.value)"
-      >    
+        v-model="company_props.phone1"
+        @input="handleInput('phone1', $event.target.value)"
+      >
       <input
         id="company_phone2"
         required
         :placeholder="`${$t('company.phone')} 2`"
-        @input="handleInput('companyPhone2', $event.target.value)"
-      >          
+        v-model="company_props.phone2"
+        @input="handleInput('phone2', $event.target.value)"
+      >
     </div>
-      <div
-        class="mgn-button blue"
-      >{{$t(this.actionBtnCaption)}}</div>
-    </div>
+    <div class="mgn-button blue" @click="formActionApply">{{$t(this.actionBtnCaption)}}</div>
   </div>
 </template>
 
@@ -96,14 +109,37 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'companies-edit',
+  data() {
+    return {
+      company_props: {}
+    }
+  },
   computed: {
-    ...mapGetters(['companies', 'activeCompanyId']),
+    ...mapGetters(['activeCompanyData']),
     formActionIsReg() {
       return this.activeCompanyId === '';
     },
     actionBtnCaption() {
-      const label = this.formActionIsReg ? 'label.register' : 'label.change'
-      return label
+      const label = this.formActionIsReg ? 'label.register' : 'label.change';
+      return label;
+    }
+  },
+  mounted() {
+    if (this.activeCompanyData) {
+      this.company_props = this.activeCompanyData
+    }
+  }, 
+  methods: {
+    handleInput(elem, value) {
+      this.company_props[elem] = value;
+    },
+    formActionApply() {
+      console.log('this.company_props=', this.company_props)
+      if (this.formActionIsReg) {
+        this.$store.dispatch('ADD_COMPANY', this.company_props)
+      } else {
+        this.$store.dispatch('UPDATE_COMPANY', this.company_props)
+      }
     }
   }
 };
@@ -123,7 +159,7 @@ export default {
     padding: 0 12px 0 2px;
     font-size: 12px;
     color: #ef444e;
-  }  
+  }
   .label {
     font-size: 18px;
     padding: 10px 0;
@@ -132,14 +168,14 @@ export default {
     font-size: 16px;
     padding: 5px 0;
   }
-  .flex-row { 
+  .flex-row {
     display: flex;
     padding-bottom: 10px;
   }
   input {
-      height: 23px;
-      width: 200px;
-      margin-right: 10px;
+    height: 23px;
+    width: 200px;
+    margin-right: 10px;
   }
   .helper-form-button {
     display: flex;
@@ -168,6 +204,5 @@ export default {
   .blue {
     background: #4472c4;
   }
-
 }
 </style>  

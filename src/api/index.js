@@ -28,6 +28,15 @@ export default {
   },
   companies () {
     return Api.get(`/companies`)
+  },
+  company_upd (data) {
+    const {compId, compData} = data
+    console.log('compId=', compId, 'compData=', compData)
+    return Api.put(`/companies`, {company_id: compId, compData})
+  },
+  company_add (data) {
+    const {compData} = data
+    return Api.put(`/companies`, {compData})
   }
 
 }

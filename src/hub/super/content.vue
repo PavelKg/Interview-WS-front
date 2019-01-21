@@ -29,7 +29,7 @@
           activeItem = this.userMenuActiveItem
           activeItem = activeItem.replace(/\.subItems/g, '').replace(/\./g, '_')
         }
-        //activeItem = activeItem.replace(/\.subItems/g, '').replace(/\./g, '_')
+
         return activeItem
       }
     },

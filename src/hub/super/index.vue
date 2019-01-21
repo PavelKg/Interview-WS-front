@@ -3,7 +3,7 @@
     <headerArea/>
     <div class='body'>
       <div class='menu-zone'><superMenu/></div>
-      <div class='content-zone'><superContent/></div>
+      <div class='content-zone' v-if="!isLoadCompany"><superContent/></div>
     </div>  
   </div>
 </template>
@@ -15,13 +15,20 @@
 
   export default {
     name: "super-page",
+    data() {
+      return {
+        isLoadCompany: true
+      }
+    },
     components: {
       headerArea,
       superMenu,
       superContent
     },
     created() {
-      this.$store.dispatch('GET_COMPANY_LIST')
+      this.$store.dispatch('GET_COMPANY_LIST').then( res => {
+        this.isLoadCompany = false
+      })
     }
   }
 </script>

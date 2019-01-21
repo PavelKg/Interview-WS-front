@@ -7,6 +7,7 @@ import store from './store'
 import VueI18n from 'vue-i18n'
 import messages from './store/i18n/messages'
 import dirClickOutside from './directive/click-outside'
+import Notifications from 'vue-notification'
 
 Vue.use(VueI18n)
 const i18n = new VueI18n({
@@ -16,10 +17,9 @@ const i18n = new VueI18n({
   silentTranslationWarn: true
 })
 
+Vue.use(Notifications)
 Vue.directive('click-outside', dirClickOutside)
- 
 require('es6-promise').polyfill()
-
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 

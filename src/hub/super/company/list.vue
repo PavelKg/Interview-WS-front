@@ -9,7 +9,11 @@
         <th>{{$t('company.videos')}}</th>
         <th colspan="2">{{$t('company.actions')}}</th>
       </thead>
-      <tr v-for="(company, index) in companies" :key="company.id" :class="{second: index%2!==0 }">
+      <tr
+        v-for="(company, index) in companies"
+        :key="company.id"
+        :class="{second: index%2!==0, deleted: Boolean(company.deleted_at)}"
+      >
         <td align="left">
           <span
             class="table-company-id"
@@ -22,12 +26,17 @@
         <td></td>
         <td align="center" class="cell-icon" title="Edit">
           <img
+            v-if="Boolean(!company.deleted_at)"
             src="@/assets/images/edit_black.png"
             v-on:click="activateContent(company.id, 'root.subItems.company.subItems.edit')"
           >
         </td>
         <td align="center" class="cell-icon" title="Delete">
-          <img src="@/assets/images/delete_black.png">
+          <img
+            v-if="Boolean(!company.deleted_at)"
+            src="@/assets/images/delete_black.png"
+            v-on:click="deleteCompany(index)"
+          >
         </td>
       </tr>
     </table>
@@ -44,8 +53,28 @@ export default {
   },
   methods: {
     activateContent(companyId, key) {
-      this.$store.commit('SET_ACTIVE_COMPANY', companyId)
-      this.$emit('contentElementClick', key)
+      this.$store.commit('SET_ACTIVE_COMPANY', companyId);
+      this.$store.dispatch('SAVE_COMPANY_STATE');
+      this.$emit('contentElementClick', key);
+    },
+    informAction(resType, message) {
+      this.$notify({
+        group: 'app',
+        type: resType,
+        title: 'Information',
+        text: message
+      });
+    },
+    deleteCompany(ind) {
+      this.$store.dispatch('DEL_COMPANY', this.companies[ind]).then(
+        res => {
+          this.informAction('success', `DEL_COMPANY: ${res}`);
+        },
+        err => {
+          this.informAction('error', `DEL_COMPANY: ${err.message}`);
+        }
+      );
+      this.activateContent('', 'root.subItems.home');
     }
   }
 };
@@ -76,6 +105,9 @@ export default {
     }
     &:hover {
       background: #bdbec1;
+    }
+    &.deleted {
+      color: red;
     }
   }
   td {

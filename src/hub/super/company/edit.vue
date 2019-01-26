@@ -100,7 +100,7 @@
         @input="handleInput('phone2', $event.target.value)"
       >
     </div>
-    <div class="mgn-button blue" @click="formActionApply">{{$t(this.actionBtnCaption)}}</div>
+    <div class="mgn-button blue" @click="formActionApply">{{$t(actionBtnCaption)}}</div>
   </div>
 </template>
 
@@ -115,13 +115,20 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['activeCompanyData']),
+    ...mapGetters(['activeCompanyData', 'activeCompanyId']),
     formActionIsReg() {
       return this.activeCompanyId === '';
     },
     actionBtnCaption() {
       const label = this.formActionIsReg ? 'label.register' : 'label.change';
       return label;
+    }
+  },
+  watch: {
+    formActionIsReg(newVal, oldVal) {
+      if (newVal) {
+        this.company_props= {}
+      }
     }
   },
   mounted() {
@@ -133,13 +140,30 @@ export default {
     handleInput(elem, value) {
       this.company_props[elem] = value;
     },
+    informAction (resType, message) {
+      this.$notify({
+        group: 'app',
+        type: resType,
+        title: 'Information',
+        text: message
+      });
+    },
     formActionApply() {
-      console.log('this.company_props=', this.company_props)
+      let actionName = ''
       if (this.formActionIsReg) {
-        this.$store.dispatch('ADD_COMPANY', this.company_props)
+        actionName = 'ADD_COMPANY'
       } else {
-        this.$store.dispatch('UPDATE_COMPANY', this.company_props)
+        actionName = 'UPDATE_COMPANY'
       }
+
+      this.$store.dispatch(actionName, this.company_props).then( 
+        res => {
+          this.informAction('success', `${actionName}: ${res}`)
+        }, 
+        err => {
+          this.informAction('error', `${actionName}: ${err.message}`)
+        }
+      )
     }
   }
 };

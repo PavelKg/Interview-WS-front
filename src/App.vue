@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view class="view"></router-view>
-    <notifications group="foo" />
+    <notifications group="app" position="bottom right" width="500" />
   </div>
 </template>
 
@@ -19,5 +19,8 @@ export default {
     height: 100%; 
     overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
+  }
+  .vue-notification {
+    border-radius: 4px;
   }
 </style>

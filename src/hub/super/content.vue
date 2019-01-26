@@ -17,7 +17,6 @@
   import root_settings_adminAdd from './settings/admin-edit'
   import root_settings_adminEdit from './settings/admin-edit'
   import root_settings_adminList from './settings/admin-list'
-  import root_settings_adminInfo from './settings/admin-info'
 
   export default {
     name: "content-area",
@@ -29,13 +28,13 @@
           activeItem = this.userMenuActiveItem
           activeItem = activeItem.replace(/\.subItems/g, '').replace(/\./g, '_')
         }
-
         return activeItem
       }
     },
     methods: {
       contentElementClick(key) {
         this.$store.commit('ITEM_STATE', key)
+        this.$store.dispatch('SAVE_COMPANY_STATE') 
         this.$store.dispatch('SAVE_MENU_STATE') 
       }
     },
@@ -50,8 +49,7 @@
       root_email_notif,
       root_settings_adminAdd,
       root_settings_adminEdit,
-      root_settings_adminList,
-      root_settings_adminInfo
+      root_settings_adminList
     }
   }
 </script> 

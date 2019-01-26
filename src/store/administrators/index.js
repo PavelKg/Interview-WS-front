@@ -2,29 +2,33 @@ import Api from '@/api'
 
 export default {
   state: {
-    companies: [],
-    activeCompanyId: ''
+    administrators: [],
+    activeAdminId: ''
   },
   actions: {
-    LOAD_ACTIVE_COMPANY_ID: ({commit}) => {
-      if (localStorage.getItem('iws-app.activeCompanyId')) {
+    LOAD_ACTIVE_ADMIN_ID: ({dispatch}) => {
+      if (localStorage.getItem('iws-app.activeAdminId')) {
         try {
-          const id = JSON.parse(localStorage.getItem('iws-app.activeCompanyId'))
+          const id = JSON.parse(localStorage.getItem('iws-app.activeAdminId'))
           if (id !== {}) {
-            commit('SET_ACTIVE_COMPANY', id)
+            dispatch('SET_ACTIVE_ADMIN', id)
           }
         } catch (e) {
-          localStorage.removeItem('iws-app.activeCompanyId')
+          localStorage.removeItem('iws-app.activeAdminId')
         }
       }
     },
-    SAVE_COMPANY_STATE: ({state}) => {
-      localStorage.setItem('iws-app.activeCompanyId', JSON.stringify(state.activeCompanyId))
+    SET_ACTIVE_ADMIN: ({commit, dispatch}, adminId) => {
+      commit('SET_ACTIVE_ADMIN', adminId)
+      dispatch('SAVE_ADMINISTRATORS_STATE')
     },
-    async GET_COMPANY_LIST ({ commit }) {
+    SAVE_ADMINISTRATORS_STATE: ({state}) => {
+      localStorage.setItem('iws-app.activeAdminId', JSON.stringify(state.activeCompanyId))
+    },
+    async GET_ADMINISTRATORS_LIST ({ commit }) {
       try {
-        const result = await Api.companies()
-        commit('SET_COMPANY_LIST', result.data.data)
+        const result = await Api.administrators()
+        commit('SET_ADMINISTRATORS_LIST', result.data.data)
       } catch (e) {
         // dispatch('ERROR', null, { root: true })
       }
@@ -62,17 +66,16 @@ export default {
         return Promise.reject(e)
       }
     },
-    async DEL_COMPANY ({ commit, dispatch }, companyData) {
+    async DEL_ADMINISTRATOR ({ commit, dispatch }, adminData) {
       try {
         // let compData = companyData
-        const compId = companyData.id
-        const result = await Api.company_del({compId})
-        console.log('result=', result)
+        const adminId = adminData.id
+        const result = await Api.user_del({adminId})
         if (result.data.code === 200) {
-          dispatch('GET_COMPANY_LIST')
+          dispatch('GET_ADMINISTRATORS_LIST')
           return Promise.resolve('Success')
         } else {
-          throw Error('Error add company data')
+          throw Error('Error del administrator')
         }
       } catch (e) {
         return Promise.reject(e)
@@ -80,25 +83,25 @@ export default {
     }
   },
   mutations: {
-    SET_COMPANY_LIST: (state, companyList) => {
-      state.companies = [...companyList]
+    SET_ADMINISTRATORS_LIST: (state, adminList) => {
+      state.administrators = [...adminList]
     },
-    SET_ACTIVE_COMPANY: (state, companyId) => {
-      state.activeCompanyId = companyId
+    SET_ACTIVE_ADMIN: (state, adminId) => {
+      state.activeAdminId = adminId
     }
   },
   getters: {
-    companies: state => state.companies,
-    activeCompanyData (state) {
-      const isSetActive = Boolean(state.activeCompanyId)
+    administrators: state => state.administrators,
+    activeAdminData (state) {
+      const isSetActive = Boolean(state.activeAdminId)
       if (isSetActive) {
-        return state.companies.find(comp => {
-          if ((comp.id === state.activeCompanyId)) {
+        return state.administrators.find(admin => {
+          if ((admin.id === state.activeAdminId)) {
             return true
           }
         })
       }
     },
-    activeCompanyId: state => state.activeCompanyId
+    activeAdminId: state => state.activeAdminId
   }
 }

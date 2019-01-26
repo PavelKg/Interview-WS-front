@@ -5,6 +5,7 @@ import Login from './login'
 import User from './user'
 import Companies from './companies'
 import Menu from './menu'
+import Administrators from './administrators'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,7 @@ export const store = new Vuex.Store({
   actions: {},
   mutations: {},
   getters: {},
-  modules: { i18nStore, Login, User, Companies, Menu }
+  modules: { i18nStore, Login, User, Companies, Menu, Administrators }
 })
 
 export default store

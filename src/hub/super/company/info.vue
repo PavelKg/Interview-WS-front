@@ -16,12 +16,17 @@
       <div class="res-button">{{$t('company.btn_resume_check')}}</div>
     </div>
     <div class="company-mng">
-      <div class="mgn-button red">{{$t('label.delete')}}</div>
+      <div
+        v-if="!isDeleted"
+        class="mgn-button red"
+        v-on:click="deleteCompany()"
+      >{{$t('label.delete')}}</div>
       <div
         class="mgn-button gray"
         v-on:click="activateContent('root.subItems.home')"
       >{{$t('label.back')}}</div>
       <div
+        v-if="!isDeleted"
         class="mgn-button blue"
         v-on:click="activateContent('root.subItems.company.subItems.edit')"
       >{{$t('label.edit')}}</div>
@@ -45,6 +50,9 @@ export default {
     ...mapGetters(['companies', 'activeCompanyId']),
     company() {
       return this.companyData;
+    },
+    isDeleted() {
+      return Boolean(this.companyData.deleted_at)
     }
   },
   created() {
@@ -57,7 +65,11 @@ export default {
   methods: {
     activateContent(key) {
       this.$emit('contentElementClick', key);
-    }
+    },
+    deleteCompany() {
+      this.$store.dispatch('DEL_COMPANY', this.companyData)
+      this.activateContent('root.subItems.home')
+    }    
   }
 };
 </script>

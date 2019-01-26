@@ -19,6 +19,8 @@
     name: "headerArea",
     mounted() {
       this.$store.dispatch('LOAD_USER_MENU', this.user_role)
+      this.$store.dispatch('LOAD_ACTIVE_COMPANY_ID')
+      this.$store.dispatch('LOAD_ACTIVE_ADMIN_ID')
     },
     data() {
       return {

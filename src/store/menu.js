@@ -80,8 +80,13 @@ const menuStructure = {
               visible: true
             },
             adminAdd: {
+              type: 'settings.adminAdd',
               caption: 'menu.admin_add',
               visible: true
+            },
+            adminEdit: {
+              type: 'settings.adminEdit',
+              caption: 'menu.admin_edit'
             }
           }
         }

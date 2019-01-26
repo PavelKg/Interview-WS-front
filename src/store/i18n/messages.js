@@ -35,6 +35,15 @@ const messages = {
       btn_genId: 'Automatic assignment',
       btn_search: 'Search'
     },
+    administrators: {
+      uid: 'ID',
+      management: 'Management',
+      name: 'User name',
+      authority: 'Authority',
+      last_login: 'Last login',
+      new_account_add: 'New Account Add',
+      administrator_info: 'Administrator Information'
+    },
     message: {
       appHeader: 'Online Interview',
       company_id: 'Company ID',
@@ -47,6 +56,7 @@ const messages = {
     },
     label: {
       companyList: 'Company List',
+      administratorList: 'List of Administrators',
       delete: 'Delete',
       back: 'Back',
       edit: 'Edit',

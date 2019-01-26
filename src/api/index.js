@@ -31,12 +31,18 @@ export default {
   },
   company_upd (data) {
     const {compId, compData} = data
-    console.log('compId=', compId, 'compData=', compData)
-    return Api.put(`/companies`, {company_id: compId, compData})
+    return Api.put(`/companies`, {company_id: compId, company_data: compData})
   },
   company_add (data) {
     const {compData} = data
-    return Api.put(`/companies`, {compData})
+    return Api.post(`/companies`, {company_data: compData})
+  },
+  company_del (data) {
+    const {compId} = data
+    return Api.delete(`/companies`, {data: {company_id: compId}})
+  },
+  administrators () {
+    return Api.get(`/administrators`)
   }
 
 }

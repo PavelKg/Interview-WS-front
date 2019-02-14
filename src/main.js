@@ -18,6 +18,7 @@ const i18n = new VueI18n({
 })
 
 Vue.use(Notifications)
+
 Vue.directive('click-outside', dirClickOutside)
 require('es6-promise').polyfill()
 Vue.config.productionTip = false

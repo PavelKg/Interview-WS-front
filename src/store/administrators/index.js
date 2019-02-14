@@ -1,3 +1,4 @@
+/* eslint-disable space-before-function-paren */
 import Api from '@/api'
 
 export default {
@@ -23,9 +24,12 @@ export default {
       dispatch('SAVE_ADMINISTRATORS_STATE')
     },
     SAVE_ADMINISTRATORS_STATE: ({state}) => {
-      localStorage.setItem('iws-app.activeAdminId', JSON.stringify(state.activeCompanyId))
+      localStorage.setItem(
+        'iws-app.activeAdminId',
+        JSON.stringify(state.activeCompanyId)
+      )
     },
-    async GET_ADMINISTRATORS_LIST ({ commit }) {
+    async GET_ADMINISTRATORS_LIST({commit}) {
       try {
         const result = await Api.administrators()
         commit('SET_ADMINISTRATORS_LIST', result.data.data)
@@ -33,44 +37,54 @@ export default {
         // dispatch('ERROR', null, { root: true })
       }
     },
-    async UPDATE_COMPANY ({ commit, dispatch }, companyData) {
+    async UPDATE_ADMINISTRATOR({commit, dispatch}, administratorData) {
       try {
-        const compId = companyData.id
-        let compData = companyData
-        delete compData.id
-        const result = await Api.company_upd({compId, compData})
+        const userId = administratorData.id
+
+        const userData = (({
+          uid,
+          name,
+          role,
+          company_id,
+          email,
+          department
+        }) => ({uid, name, role, company_id, email, department}))(
+          administratorData
+        )
+
+        console.log('userData=', userData)
+        const result = await Api.user_upd({userId, userData})
         if (result.data.code === 200) {
-          compData.id = result.data
-          dispatch('GET_COMPANY_LIST')
+          userData.id = result.data
+          dispatch('GET_ADMINISTRATORS_LIST')
           return Promise.resolve('Success')
         } else {
-          throw Error('Error update company data')
+          throw Error('Error update administrator data')
         }
       } catch (e) {
         return Promise.reject(e)
       }
     },
-    async ADD_COMPANY ({ commit, dispatch }, companyData) {
+    async ADD_ADMINISTRATOR({dispatch}, administratorData) {
       try {
-        let compData = companyData
-        delete compData.id
-        const result = await Api.company_add({compData})
+        let userData = administratorData
+        delete userData.id
+        const result = await Api.user_add({userData})
         console.log('result=', result)
         if (result.data.code === 200) {
-          dispatch('GET_COMPANY_LIST')
+          dispatch('GET_ADMINISTRATORS_LIST')
           return Promise.resolve('Success')
         } else {
-          throw Error('Error add company data')
+          throw Error('Error add administrator data')
         }
       } catch (e) {
         return Promise.reject(e)
       }
     },
-    async DEL_ADMINISTRATOR ({ commit, dispatch }, adminData) {
+    async DEL_ADMINISTRATOR({dispatch}, administratorData) {
       try {
-        // let compData = companyData
-        const adminId = adminData.id
-        const result = await Api.user_del({adminId})
+        const userId = administratorData.id
+        const result = await Api.user_del({userId})
         if (result.data.code === 200) {
           dispatch('GET_ADMINISTRATORS_LIST')
           return Promise.resolve('Success')
@@ -92,11 +106,11 @@ export default {
   },
   getters: {
     administrators: state => state.administrators,
-    activeAdminData (state) {
+    activeAdminData(state) {
       const isSetActive = Boolean(state.activeAdminId)
       if (isSetActive) {
         return state.administrators.find(admin => {
-          if ((admin.id === state.activeAdminId)) {
+          if (admin.id === state.activeAdminId) {
             return true
           }
         })

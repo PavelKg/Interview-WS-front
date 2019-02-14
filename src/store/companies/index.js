@@ -19,9 +19,12 @@ export default {
       }
     },
     SAVE_COMPANY_STATE: ({state}) => {
-      localStorage.setItem('iws-app.activeCompanyId', JSON.stringify(state.activeCompanyId))
+      localStorage.setItem(
+        'iws-app.activeCompanyId',
+        JSON.stringify(state.activeCompanyId)
+      )
     },
-    async GET_COMPANY_LIST ({ commit }) {
+    async GET_COMPANY_LIST({commit}) {
       try {
         const result = await Api.companies()
         commit('SET_COMPANY_LIST', result.data.data)
@@ -29,7 +32,7 @@ export default {
         // dispatch('ERROR', null, { root: true })
       }
     },
-    async UPDATE_COMPANY ({ commit, dispatch }, companyData) {
+    async UPDATE_COMPANY({commit, dispatch}, companyData) {
       try {
         const compId = companyData.id
         let compData = companyData
@@ -46,7 +49,7 @@ export default {
         return Promise.reject(e)
       }
     },
-    async ADD_COMPANY ({ commit, dispatch }, companyData) {
+    async ADD_COMPANY({commit, dispatch}, companyData) {
       try {
         let compData = companyData
         delete compData.id
@@ -62,7 +65,7 @@ export default {
         return Promise.reject(e)
       }
     },
-    async DEL_COMPANY ({ commit, dispatch }, companyData) {
+    async DEL_COMPANY({commit, dispatch}, companyData) {
       try {
         // let compData = companyData
         const compId = companyData.id
@@ -89,16 +92,25 @@ export default {
   },
   getters: {
     companies: state => state.companies,
-    activeCompanyData (state) {
+    activeCompanyData(state, getters) {
       const isSetActive = Boolean(state.activeCompanyId)
       if (isSetActive) {
-        return state.companies.find(comp => {
-          if ((comp.id === state.activeCompanyId)) {
-            return true
-          }
-        })
+        return getters.companyById(state.activeCompanyId)
       }
     },
-    activeCompanyId: state => state.activeCompanyId
+    companyById: state => companyId => {
+      return state.companies.find(comp => {
+        if (comp.id === companyId) {
+          return true
+        }
+      })
+    },
+    activeCompanyId: state => state.activeCompanyId,
+    actingCompanies(state) {
+      const actComp = state.companies.filter(function(company) {
+        return company.deleted_at == null
+      })
+      return actComp
+    }
   }
 }

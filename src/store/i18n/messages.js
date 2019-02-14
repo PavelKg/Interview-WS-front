@@ -39,10 +39,26 @@ const messages = {
       uid: 'ID',
       management: 'Management',
       name: 'User name',
+      company: 'Company',
+      full_name: 'Full name',
+      email: 'E-mail',
+      department: 'Department',
+      password: 'Password',
+      new_pass: 'New password',
       authority: 'Authority',
       last_login: 'Last login',
       new_account_add: 'New Account Add',
-      administrator_info: 'Administrator Information'
+      administrator_info: 'Administrator Information',
+      btn_genId: 'Automatic assignment',
+      choose_option: 'Choose one of the authority options'
+    },
+    videos: {
+      state: 'State',
+      sub_date: 'Submission date/time',
+      company_id: 'Company ID',
+      company_name: 'Company name',
+      view: 'View',
+      video_format: 'Format'
     },
     message: {
       appHeader: 'Online Interview',
@@ -62,7 +78,8 @@ const messages = {
       edit: 'Edit',
       required: 'Required',
       register: 'Register',
-      change: 'Change'
+      change: 'Change',
+      storageVideo: 'Storage Video'
     }
   },
   ru: {
@@ -73,10 +90,10 @@ const messages = {
       comp_videos: 'Видео',
       email: 'Почта',
       email_make: 'template Make',
-      email_check: 'template Ckeck',      
+      email_check: 'template Ckeck',
       settings: 'Параметры',
       admin_list: 'Список администраторов',
-      admin_add: 'Добавить администратора'      
+      admin_add: 'Добавить администратора'
     },
     company: {
       name: 'Название'
@@ -101,10 +118,10 @@ const messages = {
       comp_videos: 'Videos',
       email: 'Mail BOX',
       email_make: 'template Make',
-      email_check: 'template Ckeck',      
+      email_check: 'template Ckeck',
       settings: 'Settings',
       admin_list: 'Administrator list',
-      admin_add: 'Administrator add'      
+      admin_add: 'Administrator add'
     },
     company: {
       name: 'Name'

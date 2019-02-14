@@ -5,8 +5,9 @@
       <thead>
         <th>{{$t('administrators.uid')}}</th>
         <th>{{$t('administrators.name')}}</th>
+        <th>{{$t('administrators.company')}}</th>        
         <th>{{$t('administrators.authority')}}</th>
-        <th>{{$t('administrators.last_login')}}</th>
+        <th>{{$t('administrators.last_login')}} (Server time)</th>
         <th colspan="2">{{$t('administrators.management')}}</th>
       </thead>
       <tr
@@ -22,8 +23,9 @@
           >{{admin.uid}}</span>
         </td>
         <td>{{admin.name}}</td>
-        <td>{{admin.role}}</td>
-        <td>{{admin.last_login}}</td>
+        <td>{{companyName(admin.company_id)}}</td>
+        <td>{{admin.role_name}}</td>
+        <td align="center">{{admin.last_login}}</td>
         <td align="center" class="cell-icon" title="Edit">
           <img
             v-if="Boolean(!admin.deleted_at)"
@@ -54,7 +56,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['administrators'])
+    ...mapGetters(['administrators', 'companyById']),
   },
   created() {
       this.$store.dispatch('GET_ADMINISTRATORS_LIST').then( res => {
@@ -83,8 +85,15 @@ export default {
           this.informAction('error', `DEL_ADMINISTRATOR: ${err.message}`);
         }
       );
-      this.activateContent('', 'root.subItems.home');
-    }
+      this.activateContent('', 'root.subItems.settings.subItems.adminList');
+    },
+    companyName(comanyId) {
+      const companyName =  this.companyById(comanyId)
+      if (companyName) {
+        return companyName.name
+      }
+      return 'SUPER'
+    }     
   }
 };
 </script> 

@@ -1,4 +1,4 @@
-const findPropByName = function (obj, path) {
+const findPropByName = function(obj, path) {
   const paths = path.split('.')
   let current = obj
   for (let i = 0; i < paths.length; i += 1) {
@@ -46,6 +46,10 @@ const menuStructure = {
               type: 'company.videos',
               caption: 'menu.comp_videos',
               visible: true
+            },
+            player: {
+              type: 'company.player',
+              caption: 'menu.comp_player'
             }
           }
         },
@@ -121,7 +125,7 @@ export default {
     SAVE_MENU_STATE: ({state}) => {
       localStorage.setItem('iws-app.menu', JSON.stringify(state.menu))
     },
-    LOAD_USER_MENU: ({ commit, dispatch }, userMenuType) => {
+    LOAD_USER_MENU: ({commit, dispatch}, userMenuType) => {
       commit('SET_USER_MENU', menuStructure[userMenuType])
       commit('ITEM_STATE', 'root.subItems.home')
       dispatch('LOAD_MENU_STATE')

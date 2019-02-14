@@ -10,7 +10,8 @@
   import root_company_info from './company/info'
   import root_company_edit from './company/edit'
   import root_company_add from './company/edit'
-  import root_company_videos from './videos/videos'
+  import root_company_videos from './videos/list'
+  import root_company_player from './videos/player'
   import root_email_check from './mail/check'
   import root_email_make from './mail/make'
   import root_email_notif from './mail/notif'
@@ -44,6 +45,7 @@
       root_company_edit,
       root_company_add,
       root_company_videos,
+      root_company_player,
       root_email_check,
       root_email_make,
       root_email_notif,

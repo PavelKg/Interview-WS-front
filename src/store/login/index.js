@@ -6,12 +6,12 @@ export default {
     authStatus: ''
   },
   actions: {
-    async LOGIN ({ commit }, formData) {
+    async LOGIN({commit}, formData) {
       commit('AUTH_REQUEST')
       const {personalId, companyId, password} = formData
       try {
         const resp = await Api.login({personalId, companyId, password})
-        const { code } = resp.data
+        const {code} = resp.data
         if (code === 200) {
           localStorage.setItem('iws-token', resp.data.token)
           commit('AUTH_SUCCESS', resp.data.token)
@@ -24,7 +24,7 @@ export default {
         localStorage.removeItem('iws-token') // if the request fails, remove any possible user token if possible
       }
     },
-    async LOGOUT ({ commit }) {
+    async LOGOUT({commit}) {
       localStorage.removeItem('iws-token')
       localStorage.removeItem('iws-app.menu')
       Api.delHeaderAuth()

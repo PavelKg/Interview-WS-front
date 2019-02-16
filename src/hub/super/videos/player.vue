@@ -66,5 +66,17 @@ export default {
       justify-content: space-around;      
       width: 50%;
     }
-  }  
+  } 
+  @media (max-width: 768px) {
+      video {
+        width: 350px;
+        height: 250px;
+      }
+  } 
+  @media (max-width: 400px) {
+      video {
+        width: 200px;
+        height: 150px;
+      }
+  }   
 </style>

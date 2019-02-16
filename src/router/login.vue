@@ -1,6 +1,5 @@
 <template>
   <div id="login-form">
-    <div id="header"></div>
       <div class="logo-container">
         <img src="../assets/images/logo.png" class="avatar">
       </div>
@@ -112,9 +111,6 @@ export default {
 </script>
 
 <style lang="scss">
-#header {
-  height: 100px;
-}
 
 #login-form {
   display: flex;
@@ -127,6 +123,7 @@ export default {
 .logo-container {
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 }
 .locales-container {
   display: flex;

@@ -16,8 +16,8 @@ export default {
   body {
     background-color: white;
     margin: 0; 
-    height: 100%; 
-    overflow: hidden;
+    // height: 100%; 
+    // overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
   }
   .vue-notification {

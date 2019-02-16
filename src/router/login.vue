@@ -1,7 +1,6 @@
 <template>
   <div id="login-form">
     <div id="header"></div>
-    <form class="login" @submit.prevent="login">
       <div class="logo-container">
         <img src="../assets/images/logo.png" class="avatar">
       </div>
@@ -15,30 +14,29 @@
           <span v-if="index!==0">|</span>
           <span class="locale-item" :class="{ active: locale.code===activeLocale}">{{locale.code}}</span>
         </div>
-      </div>
+      </div>    
+    <form class="login" @submit.prevent="login">
       <div class="field-container">
         <div id="company_id" class="field-row">
-          <label>{{ $t("message.company_id") }}</label>
+          <span>{{ $t("message.company_id") }}</span>
           <input
             id="company_id"
             required
             :placeholder="placeholder('company ID')"
             @input="handleInput('companyId', $event.target.value)"
           >
-          <div class="right_space"/>
         </div>
         <div id="user_id" class="field-row">
-          <label>{{ $t("message.personal_id") }}</label>
+          <span>{{ $t("message.personal_id") }}</span>
           <input
             id="personal_id"
             required
             :placeholder="placeholder('personal ID')"
             @input="handleInput('personalId',$event.target.value)"
           >
-          <div class="right_space"/>
         </div>
         <div id="password" class="field-row">
-          <label>{{ $t("message.password") }}</label>
+          <span>{{ $t("message.password") }}</span>
           <input
             id="password"
             type="password"
@@ -47,7 +45,6 @@
             :value="password"
             @input="handleInput('password', $event.target.value)"
           >
-          <div class="right_space"/>
         </div>
       </div>
       <div class="errMess">
@@ -122,14 +119,12 @@ export default {
 #login-form {
   display: flex;
   flex-direction: column;
-  max-width: 900px;
   background-color: #fff;
+  align-items: center;
   margin: 0 auto;
   padding: 0 60px;
 }
 .logo-container {
-  //text-align: center;
-  //margin: 24px 0 12px 0;
   display: flex;
   justify-content: center;
 }
@@ -158,29 +153,20 @@ export default {
 }
 .field-row {
   display: flex;
-  align-content: space-between;
+  align-content: center;
   margin-bottom: 10px;
   height: 30px;
-  label {
-    flex-grow: 3;
-    text-align: right;
-    padding-right: 30px;
-    line-height: 1.6;
-    flex-shrink: 1;
-    flex-basis: 0%;
+  align-content: space-between;
+  span {
+    line-height:30px;
+    padding-right: 15px;
     font-size: 20px;
+    white-space: nowrap;
+    text-align: right;
+    width: 100%;
   }
   input {
-    flex-grow: 2;
-    flex-shrink: 1;
-    flex-basis: 0%;
-    //width: 35%;
-    //margin-right: 300px;
-  }
-  .right_space {
-    flex-grow: 2;
-    flex-shrink: 1;
-    flex-basis: 0%;
+    margin-left: auto;
   }
 }
 .button-container {
@@ -203,6 +189,7 @@ button {
 .password-recovery {
   display: flex;
   justify-content: center;
+  white-space: nowrap;
 }
 
 .errMess {
@@ -214,6 +201,12 @@ button {
     color: red;
     text-align: right;
   }
+}
+@media (max-width: 768px) {
+
+}
+@media (max-width: 400px) {
+
 }
 </style>
 

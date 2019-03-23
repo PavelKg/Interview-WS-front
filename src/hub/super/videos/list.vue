@@ -15,7 +15,18 @@
         :key="video.id"
         :class="{second: index%2!==0, deleted: Boolean(video.deleted_at)}"
       >
-        <td>{{video.state}}</td>
+        <td>          
+          <img
+            class="img-active"
+            src="@/assets/images/baseline_play_circle_white.png"
+            v-on:click="activateContent(videos.filename, 'root.subItems.company.subItems.player')"
+          >
+          <img
+            class="img-active"
+            src="@/assets/images/baseline_play_circle_white.png"
+            v-on:click="activateContent(videos.filename, 'root.subItems.company.subItems.player')"
+          >
+        </td>
         <td align="center">{{video.created_at}}</td>
         <td>{{video.company_id}}</td>
         <td>{{video.company_id}}</td>
@@ -48,7 +59,7 @@ export default {
     ...mapGetters(['videos'])
   },
   created() {
-    this.$store.dispatch('GET_VIDEO_LIST').then(res => {
+    this.$store.dispatch('GET_VIDEO_LIST', [{field:"id", cond:"=", val:2}]).then(res => {
       this.isLoadVideo = false
     })
   },

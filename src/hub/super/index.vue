@@ -39,6 +39,7 @@
   height: 100vh;
   flex-direction: row;
   .menu-zone {
+    height: 100%;
     display: flex;
     flex-grow: 1;
     background-color: #464a4f;

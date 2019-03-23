@@ -60,7 +60,8 @@ export default {
     const {userId} = data
     return Api.delete(`/administrators`, {data: {user_id: userId}})
   },
-  videos() {
-    return Api.get(`/videos`)
+  videos(data) {
+    console.log('data=', data)
+    return Api.get(`/videos/?params=${JSON.stringify(data)}`)
   }
 }

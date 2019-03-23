@@ -5,7 +5,7 @@ export default {
     user: ''
   },
   actions: {
-    async GET_USER_INFO ({ commit, dispatch }) {
+    async GET_USER_INFO({ commit, dispatch }) {
       try {
         const result = await Api.user_info()
         commit('SET_USER', result.data.user_info)

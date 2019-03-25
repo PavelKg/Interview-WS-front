@@ -69,7 +69,7 @@
   align-items: center;
   font-size: 28px;
   color: white;
-  padding-left: 20px;
+  padding-left: 170px;
 }
 .user-info {
   display: flex;

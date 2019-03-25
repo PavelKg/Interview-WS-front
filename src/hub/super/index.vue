@@ -67,4 +67,9 @@
     background-color: #ffffff;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .menu-zone {width: 0px;}
+  .body {margin-left: 0px;}
+}
 </style>

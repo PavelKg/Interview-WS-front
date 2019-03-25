@@ -1,8 +1,8 @@
 <template>
   <div>
-    <headerArea/>
+    <div class='header-zone'><headerArea/></div>      
+    <div class='menu-zone'><superMenu/></div>
     <div class='body'>
-      <div class='menu-zone'><superMenu/></div>
       <div class='content-zone' v-if="!isLoadCompany"><superContent/></div>
     </div>  
   </div>
@@ -34,17 +34,32 @@
 </script>
 
 <style lang="scss">
+.header-zone {
+  position: fixed; /* Stay in place */
+  width: 100%;
+  height: 50px;
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+
+}
+.menu-zone {
+  position: fixed; /* Stay in place */
+  height: 100%;
+  background-color: #464a4f;
+  width: 150px; /* 0 width - change this with JavaScript */
+  z-index: 1; /* Stay on top */
+  left: 0;
+  top: 50px;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 10px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
 .body {
   display: flex;
-  height: 100vh;
-  flex-direction: row;
-  .menu-zone {
-    height: 100%;
-    display: flex;
-    flex-grow: 1;
-    background-color: #464a4f;
-    max-width: 150px;
-  }
+  margin-left: 150px;
+  margin-top: 50px;
+  flex-direction: column;
   .content-zone {
     display: flex;
     flex-grow: 20;

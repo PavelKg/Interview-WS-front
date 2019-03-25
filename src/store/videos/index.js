@@ -6,7 +6,11 @@ export default {
     reqData: {
       sDef: {
         sSortCriterias: [{sSort: 1}] /* {name: desc} */,
-        sFieldCriterias: [] /* {"field":"event_today", "cond":"between", "val":[20190207,20190207 ]} */
+        sFieldCriterias: [], /* {"field":"event_today", "cond":"between", "val":[20190207,20190207 ]} */
+        sReqData: {
+          sLimit: 0,
+          sOffset: 0
+        }
       }
     }
   },

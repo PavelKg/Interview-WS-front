@@ -3,21 +3,26 @@
     <div class='header-zone'><headerArea/></div>      
     <div class='menu-zone' v-if="!isSmallScreen || isMenuVisible"><menuArea/></div>
     <div class='body'>
-      <div class='content-zone' v-if="!isLoadCompany "><!--superContent/--></div>
+      <div class='content-zone' v-if="!isLoadCompany ">
+        <component :is="component" v-if="component" />
+        <!--superContent/-->
+        </div>
     </div>  
   </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   import headerArea from './header'
   import menuArea from './menu/'
-  //import superContent from './content'
+  //import superContent from './content'91
 
   export default {
     name: "super-page",
     data() {
       return {
-        isLoadCompany: true
+        isLoadCompany: true,
+        component: null,
       }
     },
     components: {
@@ -30,12 +35,25 @@
         this.isLoadCompany = false
       })
     },
+    mounted() {
+      this.loader()
+        .then(() => {
+          this.component = () => this.loader()
+        })
+        .catch(() => {
+          this.component = () => import('./template/super/content')
+        })
+    },  
     computed: {
+      ...mapGetters(['windowsRect']),
+      loader() {
+        return () => import(`./template/super/content`)
+      },
       isMenuVisible() {
         return this.$store.getters.userMenuVisible
       },
       isSmallScreen() {
-        return this.$store.getters.windowsRect['width'] < 768
+        return this.windowsRect.width < this.windowsRect.tabletMaxWidth
       }
     }
   }
@@ -77,7 +95,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  //.menu-zone {width: 0px;}
+  .menu-zone {opacity: 0.95;}
   .body {margin-left: 0px;}
 }
 </style>

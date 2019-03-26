@@ -44,7 +44,7 @@ export default {
       this.user_info_block_open = !this.user_info_block_open
     },
     toggle_menu() {
-      const appWidth = this.windowsRect.width < 769
+      const appWidth = this.windowsRect.width < this.windowsRect.tabletMaxWidth
       if (appWidth) {
         this.$store.commit('MENU_TOGGLE')
       }
@@ -89,6 +89,7 @@ export default {
   font-size: 28px;
   color: white;
   padding-left: 1px;
+  transition: 0.5s;
 }
 .user-info {
   display: flex;
@@ -132,6 +133,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 450px) {
+  .app-title {font-size: 20px;}
 }
 </style>

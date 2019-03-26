@@ -12,8 +12,7 @@ export default {
     return {
       window: {
         width: 0,
-        height: 0,
-        mobileWidth: 768
+        height: 0
       }
     }
   },
@@ -30,7 +29,8 @@ export default {
       rect.width  = window.innerWidth
       rect.height = window.innerHeight;
       this.$store.commit('windowsResize', rect); 
-      if (rect.width < this.window.mobileWidth) (
+      const tabletWidth = this.$store.getters.windowsRect.tabletMaxWidth
+      if (rect.width < tabletWidth) (
         this.$store.commit('MENU_HIDE') 
       )
       //this.window.width = window.innerWidth;

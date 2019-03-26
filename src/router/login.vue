@@ -82,7 +82,7 @@ export default {
         .then(() => {
           if (this.authStatus === 'success') {
             this.$store.dispatch('GET_USER_INFO').then(() => {
-              this.$router.push(`/${this.user_role}`);
+              this.$router.push(`/hub/${this.user_role}`);
             });
           } else if (this.authStatus === 'error') {
             this.errMessage = 'message.authError';

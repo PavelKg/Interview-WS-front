@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class='header-zone'><headerArea/></div>      
-    <div class='menu-zone'><superMenu/></div>
+    <div class='menu-zone' v-if="!isSmallScreen || isMenuVisible"><menuArea/></div>
     <div class='body'>
-      <div class='content-zone' v-if="!isLoadCompany"><superContent/></div>
+      <div class='content-zone' v-if="!isLoadCompany "><!--superContent/--></div>
     </div>  
   </div>
 </template>
 
 <script>
-  import headerArea from '../header'
-  import superMenu from '../menu/'
-  import superContent from './content'
+  import headerArea from './header'
+  import menuArea from './menu/'
+  //import superContent from './content'
 
   export default {
     name: "super-page",
@@ -22,15 +22,24 @@
     },
     components: {
       headerArea,
-      superMenu,
-      superContent
+      menuArea,
+      //superContent
     },
     created() {
       this.$store.dispatch('GET_COMPANY_LIST').then( res => {
         this.isLoadCompany = false
       })
+    },
+    computed: {
+      isMenuVisible() {
+        return this.$store.getters.userMenuVisible
+      },
+      isSmallScreen() {
+        return this.$store.getters.windowsRect['width'] < 768
+      }
     }
   }
+// :style="[isMenuVisible ? {'width':'150px'} : {'width':'0px'}]"  
 </script>
 
 <style lang="scss">
@@ -41,7 +50,6 @@
   z-index: 1; /* Stay on top */
   top: 0; /* Stay at the top */
   left: 0;
-
 }
 .menu-zone {
   position: fixed; /* Stay in place */
@@ -69,7 +77,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .menu-zone {width: 0px;}
+  //.menu-zone {width: 0px;}
   .body {margin-left: 0px;}
 }
 </style>

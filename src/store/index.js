@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Main from './main'
 import i18nStore from './i18n'
 import Login from './login'
 import User from './user'
@@ -15,7 +16,7 @@ export const store = new Vuex.Store({
   actions: {},
   mutations: {},
   getters: {},
-  modules: { i18nStore, Login, User, Companies, Menu, Administrators, Videos }
+  modules: { Main, i18nStore, Login, User, Companies, Menu, Administrators, Videos }
 })
 
 export default store

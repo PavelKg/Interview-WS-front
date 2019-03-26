@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
 import Home from './home'
-import Applicant from '../hub/applicant/'
-import Management from '../hub/management/'
-import Super from '../hub/super/'
+// import Applicant from '../hub/'
+// import Management from '../hub/'
+import Hub from '../hub/'
 import Login from './login'
 import NotFound from '../components/NotFound.vue'
 
@@ -54,21 +54,9 @@ export default new Router({
       // component: Home
     },
     {
-      path: '/management',
-      name: 'Management',
-      component: Management,
-      beforeEnter: ifAuthenticated
-    },
-    {
-      path: '/super',
-      name: 'Super',
-      component: Super,
-      beforeEnter: ifAuthenticated
-    },
-    {
-      path: '/applicant',
-      name: 'Applicant',
-      component: Applicant,
+      path: '/hub/:role',
+      name: 'Role',
+      component: Hub,
       beforeEnter: ifAuthenticated
     },
     {

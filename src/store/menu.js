@@ -103,6 +103,7 @@ const menuStructure = {
 
 export default {
   state: {
+    visible: false,
     menu: {
       root: {
         activeItem: false
@@ -144,10 +145,20 @@ export default {
     },
     ITEM_STATE: (state, item) => {
       state.menu.root.activeItem = item
+    },
+    MENU_HIDE: (state) => {
+      state.visible = false
+    },
+    MENU_SHOW: (state) => {
+      state.visible = true
+    },
+    MENU_TOGGLE: (state) => {
+      state.visible = Boolean(!state.visible)
     }
   },
   getters: {
     userMenu: state => state.menu,
+    userMenuVisible: state => Boolean(state.visible),
     userMenuActiveItem: state => state.menu.root.activeItem
   }
 }

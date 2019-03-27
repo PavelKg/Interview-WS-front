@@ -68,7 +68,9 @@ const messages = {
       btnLogin: 'LOGIN',
       lnkPassRec: 'Forgot Your ID/Password ?',
       authError: 'Authorization error',
-      logOut: 'Log out'
+      logOut: 'Log out',
+      forgot_pass_descr: `Please enter your registered email address and press the [Send] button.
+      We will send you an email with the URL for the change to the email address you have entered.`
     },
     label: {
       companyList: 'Company List',
@@ -79,7 +81,10 @@ const messages = {
       required: 'Required',
       register: 'Register',
       change: 'Change',
-      storageVideo: 'Storage Video'
+      send: 'Send',
+      storageVideo: 'Storage Video',
+      forgot_pass: 'Forgot ID/password',
+      mail_address: 'Mail Address'
     }
   },
   ru: {

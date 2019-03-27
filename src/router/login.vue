@@ -53,12 +53,13 @@
         <button type="submit">{{ $t("message.btnLogin") }}</button>
       </div>
     </form>
-    <a href="#" class="password-recovery">{{ $t("message.lnkPassRec")}}</a>
+    <PassRec/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import PassRec from './passRecovery'
 
 export default {
   name: 'app',
@@ -69,6 +70,9 @@ export default {
       password: '',
       errMessage: ''
     };
+  },
+  components: {
+    PassRec
   },
   mounted() {
     this.$store.commit('INIT_LANG');

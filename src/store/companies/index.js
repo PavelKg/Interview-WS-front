@@ -96,7 +96,10 @@ export default {
       const isSetActive = Boolean(state.activeCompanyId)
       if (isSetActive) {
         return getters.companyById(state.activeCompanyId)
+      } else {
+        return {}
       }
+
     },
     companyById: state => companyId => {
       return state.companies.find(comp => {

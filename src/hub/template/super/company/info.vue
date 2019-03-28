@@ -1,77 +1,71 @@
 <template>
-  <div class="company-info">
-    <div class="company-name">{{company.name}}</div>
-    <div class="label">{{$t('company.basic_information')}}</div>
-    <div class="item">{{$t('company.cid')}}: {{company.cid}}</div>
-    <div class="item">{{$t('company.plan')}}: {{company.plan}}</div>
-    <div class="label">{{$t('company.contact')}}</div>
-    <div class="item">{{company.zipcode}}</div>
-    <div class="item">{{company.address}}</div>
-    <div class="item">{{company.department}}</div>
-    <div class="item">{{company.contact_name}}</div>
-    <div class="item">{{company.email1}}, {{company.email2}}</div>
-    <div class="item">{{company.phone1}}, {{company.phone2}}</div>
-    <div class="company-res">
-      <div class="res-button">{{$t('company.btn_video_capacity_check')}}</div>
-      <div class="res-button">{{$t('company.btn_resume_check')}}</div>
+  <div>
+    <div class="company-info"  v-if="typeof company == 'undefined'">
+      <div class="company-name">Sorry, information about company not found !!!</div>
     </div>
-    <div class="company-mng">
-      <div
-        v-if="!isDeleted"
-        class="mgn-button red"
-        v-on:click="deleteCompany()"
-      >{{$t('label.delete')}}</div>
-      <div
-        class="mgn-button gray"
-        v-on:click="activateContent('root.subItems.home')"
-      >{{$t('label.back')}}</div>
-      <div
-        v-if="!isDeleted"
-        class="mgn-button blue"
-        v-on:click="activateContent('root.subItems.company.subItems.edit')"
-      >{{$t('label.edit')}}</div>
+    <div class="company-info" v-else>
+      <div class="company-name">{{company.name}}</div>
+      <div class="label">{{$t('company.basic_information')}}</div>
+      <div class="item">{{$t('company.cid')}}: {{company.cid}}</div>
+      <div class="item">{{$t('company.plan')}}: {{company.plan}}</div>
+      <div class="label">{{$t('company.contact')}}</div>
+      <div class="item">{{company.zipcode}}</div>
+      <div class="item">{{company.address}}</div>
+      <div class="item">{{company.department}}</div>
+      <div class="item">{{company.contact_name}}</div>
+      <div class="item">{{company.email1}}, {{company.email2}}</div>
+      <div class="item">{{company.phone1}}, {{company.phone2}}</div>
+      <div class="company-res">
+        <div class="res-button">{{$t('company.btn_video_capacity_check')}}</div>
+        <div class="res-button">{{$t('company.btn_resume_check')}}</div>
+      </div>
+      <div class="company-mng">
+        <div
+          v-if="!isDeleted"
+          class="mgn-button red"
+          v-on:click="deleteCompany()"
+        >{{$t('label.delete')}}</div>
+        <div
+          class="mgn-button gray"
+          v-on:click="activateContent('root.subItems.home')"
+        >{{$t('label.back')}}</div>
+        <div
+          v-if="!isDeleted"
+          class="mgn-button blue"
+          v-on:click="activateContent('root.subItems.company.subItems.edit')"
+        >{{$t('label.edit')}}</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'companies-info',
   date() {
-    return {
-      companyData: {
-        name: ''
-      }
-    };
+    return {}
   },
   computed: {
-    ...mapGetters(['companies', 'activeCompanyId']),
+    ...mapGetters(['activeCompanyData']),
     company() {
-      return this.companyData;
+      return this.activeCompanyData
     },
     isDeleted() {
-      return Boolean(this.companyData.deleted_at)
+      return Boolean(this.company.deleted_at)
     }
-  },
-  created() {
-    this.companyData = this.companies.find(el => {
-      if (el.id === this.activeCompanyId) {
-        return el;
-      }
-    });
   },
   methods: {
     activateContent(key) {
-      this.$emit('contentElementClick', key);
+      this.$emit('contentElementClick', key)
     },
     deleteCompany() {
       this.$store.dispatch('DEL_COMPANY', this.companyData)
       this.activateContent('root.subItems.home')
-    }    
+    }
   }
-};
+}
 </script>
 
 <style lang="scss">

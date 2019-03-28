@@ -3,6 +3,7 @@
     <div class="page-header">{{$t('label.storageVideo')}}</div>
     <table class="tb-videos">
       <thead>
+        <th>Check</th>
         <th>{{$t('videos.state')}}</th>
         <th>{{$t('videos.sub_date')}}</th>
         <th>{{$t('videos.company_id')}}</th>
@@ -15,26 +16,29 @@
         :key="video.id"
         :class="{second: index%2!==0, deleted: Boolean(video.deleted_at)}"
       >
-        <td>          
+        <td align="center">
+          <input type="checkbox" id="scales" name="scales" checked>
+        </td>
+        <td align="center">
           <img
             class="img-active"
-            src="@/assets/images/baseline_play_circle_white.png"
-            v-on:click="activateContent(videos.filename, 'root.subItems.company.subItems.player')"
-          >
-          <img
-            class="img-active"
-            src="@/assets/images/baseline_play_circle_white.png"
-            v-on:click="activateContent(videos.filename, 'root.subItems.company.subItems.player')"
+            src="@/assets/images/outline_lock_black.png"
+            @click="activateContent(video.filename, 'root.subItems.company.subItems.player')"
           >
         </td>
         <td align="center">{{video.created_at}}</td>
-        <td>{{video.company_id}}</td>
-        <td>{{video.company_id}}</td>
-        <td align="center" class="cell-icon" title="Edit">
+        <td>
+          <a
+            href="#"
+            @click="activateContent(video.company_id, 'root.subItems.company.subItems.info')"
+          >{{video.company_cid}}</a>
+        </td>
+        <td>{{video.company_name}}</td>
+        <td align="center" class="cell-icon" :title="video.filename">
           <img
             class="img-active"
             src="@/assets/images/baseline_play_circle_white.png"
-            v-on:click="activateContent(videos.filename, 'root.subItems.company.subItems.player')"
+            @click="activateContent(video.filename, 'root.subItems.company.subItems.player')"
           >
         </td>
         <td align="center" class="cell-icon">
@@ -49,23 +53,27 @@
 import {mapGetters} from 'vuex'
 
 export default {
-  name: 'administrators',
+  name: 'videos',
   data() {
     return {
       isLoadVideo: true
     }
   },
   computed: {
-    ...mapGetters(['videos'])
+    ...mapGetters(['videos', 'activeCompanyId'])
   },
-  created() {
-    this.$store.dispatch('GET_VIDEO_LIST', [{field:"id", cond:"=", val:2}]).then(res => {
-      this.isLoadVideo = false
-    })
-  },
+  mounted() {},
   methods: {
-    activateContent(adminId, key) {
-      this.$store.dispatch('SET_ACTIVE_ADMIN', adminId)
+    activateContent(contentId, key) {
+      console.log('contentId=', contentId)
+      switch (key) {
+        case 'root.subItems.company.subItems.info':
+          this.$store.commit('SET_ACTIVE_COMPANY', contentId)
+          break;
+        default:
+          this.$store.dispatch('SET_ACTIVE_VIDEO', contentId)
+          break;
+      }
       this.$emit('contentElementClick', key)
     },
     informAction(resType, message) {
@@ -75,17 +83,6 @@ export default {
         title: 'Information',
         text: message
       })
-    },
-    deleteAdmin(ind) {
-      this.$store.dispatch('DEL_ADMINISTRATOR', this.administrators[ind]).then(
-        res => {
-          this.informAction('success', `DEL_ADMINISTRATOR: ${res}`)
-        },
-        err => {
-          this.informAction('error', `DEL_ADMINISTRATOR: ${err.message}`)
-        }
-      )
-      this.activateContent('', 'root.subItems.settings.subItems.adminList')
     },
     companyName(comanyId) {
       const companyName = this.companyById(comanyId)

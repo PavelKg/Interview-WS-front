@@ -13,10 +13,7 @@ export default {
   components: {
     MenuTree
   },
-  mounted() {
-    //this.$store.dispatch('LOAD_MENU_STATE')
-    //console.log(this.userMenu)
-  },
+  mounted() {},
   data() {
     return {
       menuTree: {}

@@ -15,15 +15,22 @@
         :class="{second: index%2!==0, deleted: Boolean(company.deleted_at)}"
       >
         <td align="left">
-          <span
-            class="table-company-id"
-            title="Information"
-            v-on:click="activateContent(company.id, 'root.subItems.company.subItems.info')"
-          >{{company.cid}}</span>
+          <a href="#">
+            <span
+              class="table-company-id"
+              title="Information"
+              v-on:click="activateContent(company.id, 'root.subItems.company.subItems.info')"
+            >{{company.cid}}</span>
+          </a>
         </td>
         <td>{{company.name}}</td>
         <td>{{company.description}}</td>
-        <td></td>
+        <td align="center" class="cell-icon" title="Video capacity">
+          <img
+            src="@/assets/images/video_library_black.png"
+            v-on:click="activateContent(company.id, 'root.subItems.company.subItems.videos')"
+          >
+        </td>
         <td align="center" class="cell-icon" title="Edit">
           <img
             v-if="Boolean(!company.deleted_at)"
@@ -44,18 +51,29 @@
 </template>  
 
 <script>
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'companies',
   computed: {
     ...mapGetters(['companies'])
   },
+  mounted() {
+    this.$store.commit('SET_ACTIVE_COMPANY', '')
+    this.$store.dispatch('SAVE_COMPANY_STATE')
+  },
   methods: {
     activateContent(companyId, key) {
-      this.$store.commit('SET_ACTIVE_COMPANY', companyId);
-      this.$store.dispatch('SAVE_COMPANY_STATE');
-      this.$emit('contentElementClick', key);
+      this.$store.commit('SET_ACTIVE_COMPANY', companyId)
+      this.$store.dispatch('SAVE_COMPANY_STATE')
+
+      if (key === 'root.subItems.company.subItems.videos') {
+        this.$store.dispatch('GET_VIDEO_LIST', [
+          {field: 'company_id', cond: '=', val: companyId}
+        ])
+      }
+
+      this.$emit('contentElementClick', key)
     },
     informAction(resType, message) {
       this.$notify({
@@ -63,21 +81,21 @@ export default {
         type: resType,
         title: 'Information',
         text: message
-      });
+      })
     },
     deleteCompany(ind) {
       this.$store.dispatch('DEL_COMPANY', this.companies[ind]).then(
         res => {
-          this.informAction('success', `DEL_COMPANY: ${res}`);
+          this.informAction('success', `DEL_COMPANY: ${res}`)
         },
         err => {
-          this.informAction('error', `DEL_COMPANY: ${err.message}`);
+          this.informAction('error', `DEL_COMPANY: ${err.message}`)
         }
-      );
-      this.activateContent('', 'root.subItems.home');
+      )
+      this.activateContent('', 'root.subItems.home')
     }
   }
-};
+}
 </script> 
 
 <style lang="scss">
@@ -111,7 +129,7 @@ export default {
     }
   }
   td {
-    padding: 12px;
+    padding: 12px 20px;
     padding: 0.75rem;
     vertical-align: middle;
     border-top: 1px solid #dee2e6;

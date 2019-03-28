@@ -1,6 +1,6 @@
 <template>
   <div v-if="node && node.visible" class="menu-item">
-    <div class="menu-item-name" @click="handleClick(node, myKey)">
+    <div class="menu-item-name" @click="menuHandleClick(node, myKey)">
       <span v-if="node.caption" class="caption">{{$t(node.caption)}}</span>
       <div v-if="node.isSection" class="triangle-bottom" :class="{triangleActive: node.isOpen}"/>
       <div v-if="myKey === userMenuActiveItem" class="triangleSelected"/>
@@ -18,14 +18,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'node',
   data() {
     return {
       showChildren: true
-    };
+    }
   },
   props: {
     node: Object,
@@ -33,11 +33,27 @@ export default {
     handleClick: Function
   },
   mounted() {},
-  methods: {},
+  methods: {
+    menuHandleClick(node, myKey) {
+      console.log('menu item click=', node, myKey)
+      switch (myKey) {
+        case 'root.subItems.company.subItems.videos':
+          this.$store.commit('SET_ACTIVE_COMPANY', '')
+          this.$store.dispatch('SAVE_COMPANY_STATE')
+          this.$store.dispatch('GET_VIDEO_LIST', [
+            {field: 'id', cond: '>', val: 0}
+          ])
+          break
+        default:
+          break
+      }
+      this.handleClick(node, myKey)
+    }
+  },
   computed: {
-  ...mapGetters(['userMenuActiveItem'])
+    ...mapGetters(['userMenuActiveItem'])
   }
-};
+}
 </script>
 
 <style lang="scss">

@@ -11,6 +11,7 @@
   import root_company_edit from './company/edit'
   import root_company_add from './company/edit'
   import root_company_videos from './videos/list'
+  import root_company_resumes from './videos/list'
   import root_company_player from './videos/player'
   import root_email_check from './mail/check'
   import root_email_make from './mail/make'
@@ -34,6 +35,7 @@
     },
     methods: {
       contentElementClick(key) {
+        console.log('key=', key)
         this.$store.commit('ITEM_STATE', key)
         this.$store.dispatch('SAVE_COMPANY_STATE') 
         this.$store.dispatch('SAVE_MENU_STATE') 
@@ -45,6 +47,7 @@
       root_company_edit,
       root_company_add,
       root_company_videos,
+      root_company_resumes,
       root_company_player,
       root_email_check,
       root_email_make,

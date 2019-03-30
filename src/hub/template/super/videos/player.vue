@@ -3,7 +3,7 @@
     <div class='player-zone'>
       <video ref="videoPlayer" controls></video>
       <div class="player-zone-company-info">
-        <p>ID:001 ABCD</p>
+        <p></p>
         <p>https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8</p>
       </div>
     </div>
@@ -18,28 +18,42 @@
 import Hls from 'hls.js'
 
 export default {
- mounted() {
-   let video = this.$refs.videoPlayer;
-   if(Hls.isSupported()) {
-     console.log("hello hls.js!");
-    var hls = new Hls();
-    hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+  computed: {
+    ...mapGetters(['videos']),
+    videoInfo() {
+      return this.videos[0]
+    },
+    companyInfo() {
+      if (this.activeCompanyId) {
+        const compInfo = this.companyById(this.activeCompanyId)
+        return `ID: ${compInfo.cid} / ${compInfo.name}`.toUpperCase()
+      } else {
+        return false
+      }
+    },
+  },
+  mounted() {
+    let video = this.$refs.videoPlayer;
+    if(Hls.isSupported()) {
+      console.log("hello hls.js!");
+      var hls = new Hls();
+      hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+          video.play();
+      })
+    } else {
+        addSourceToVideo(video, 'https://p0.oc.kg:8081/video/c/hd3/Mortal_Engines_HD.mp4', 'video/mp4');
         video.play();
-    })
-  } else {
-      addSourceToVideo(video, 'https://p0.oc.kg:8081/video/c/hd3/Mortal_Engines_HD.mp4', 'video/mp4');
-      video.play();
-    }
+      }
 
-    function addSourceToVideo(element, src, type) {
-      var source = document.createElement('source');
-      source.src = src;
-      source.type = type;
-      element.appendChild(source);
-    }
- } 
+      function addSourceToVideo(element, src, type) {
+        var source = document.createElement('source');
+        source.src = src;
+        source.type = type;
+        element.appendChild(source);
+      }
+  } 
 }
 </script>
 <style lang="scss">

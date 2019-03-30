@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="page-header">{{$t('label.storageVideo')}}</div>
+    <div class="company-info" v-if="companyInfo">{{companyInfo}}</div>
+    <div class="page-header">{{$t('label.storageVideoCapacity')}}: 6GB / 10GB</div>
     <table class="tb-videos">
       <thead>
-        <th>Check</th>
+        <th>{{$t('videos.check')}}</th>
         <th>{{$t('videos.state')}}</th>
         <th>{{$t('videos.sub_date')}}</th>
         <th>{{$t('videos.company_id')}}</th>
@@ -17,7 +18,7 @@
         :class="{second: index%2!==0, deleted: Boolean(video.deleted_at)}"
       >
         <td align="center">
-          <input type="checkbox" id="scales" name="scales" checked>
+          <b-form-checkbox :id="`check-${video.id}`" :name="'check'+video.id"></b-form-checkbox>
         </td>
         <td align="center">
           <img
@@ -38,12 +39,15 @@
           <img
             class="img-active"
             src="@/assets/images/baseline_play_circle_white.png"
-            @click="activateContent(video.filename, 'root.subItems.company.subItems.player')"
+            @click="activateContent(video.id, 'root.subItems.company.subItems.player')"
           >
         </td>
-        <td align="center" class="cell-icon">
+        <td v-if="extFormat(video.filename) === 'mp4'" align="center" class="cell-icon">
           <img src="@/assets/images/mp4-music-file-format.png">
         </td>
+        <td v-else align="center" class="cell-icon">
+          <img src="@/assets/images/m3u8-file-format.png">
+        </td>        
       </tr>
     </table>
   </div>
@@ -60,19 +64,45 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['videos', 'activeCompanyId'])
+    ...mapGetters(['videos', 'activeCompanyId', 'companyById']),
+    companyInfo() {
+      if (this.activeCompanyId) {
+        const compInfo = this.companyById(this.activeCompanyId)
+        return `ID: ${compInfo.cid} / ${compInfo.name}`.toUpperCase()
+      } else {
+        return false
+      }
+    },
   },
-  mounted() {},
+  mounted() {
+    const video_list = this.videos
+    const compId = this.activeCompanyId
+    let reqConstr = {field: 'company_id', cond: '>', val: 0}
+    if (Boolean(compId)) {
+      reqConstr = {...reqConstr, cond: '=', val: compId}
+    }
+
+    if (video_list.length === 0) {
+      this.$store.dispatch('GET_VIDEO_LIST', [reqConstr])
+    }
+  },
   methods: {
     activateContent(contentId, key) {
-      console.log('contentId=', contentId)
+      let reqConstr
       switch (key) {
         case 'root.subItems.company.subItems.info':
           this.$store.commit('SET_ACTIVE_COMPANY', contentId)
-          break;
+          break
+        case 'root.subItems.company.subItems.player':
+          this.$store.dispatch('SET_ACTIVE_VIDEO', contentId)
+          reqConstr = {field: 'video_id', cond: '=', val: contentId}
+          this.$store.dispatch('GET_VIDEO_LIST', [reqConstr])
+          break
         default:
           this.$store.dispatch('SET_ACTIVE_VIDEO', contentId)
-          break;
+          reqConstr = {field: 'video_id', cond: '=', val: contentId}
+          this.$store.dispatch('GET_VIDEO_LIST', [reqConstr])
+          break
       }
       this.$emit('contentElementClick', key)
     },
@@ -84,18 +114,20 @@ export default {
         text: message
       })
     },
-    companyName(comanyId) {
-      const companyName = this.companyById(comanyId)
-      if (companyName) {
-        return companyName.name
-      }
-      return 'SUPER'
+    extFormat(file) {
+      const re = /\.[A-z0-9]{3,4}$/gi
+      const found = file.match(re);
+      return found[0].slice(1)
     }
   }
 }
 </script> 
 
 <style lang="scss">
+.company-info {
+  font-size: 20px;
+  margin: 15px;
+}
 .page-header {
   font-size: 20px;
   margin: 15px;
@@ -112,6 +144,7 @@ export default {
     border-bottom: 2px solid #dee2e6;
     background: #6e6e70;
     color: #ffffff;
+    text-align: center;
   }
   tr {
     background: #ffffff;

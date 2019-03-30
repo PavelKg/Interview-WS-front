@@ -3,7 +3,7 @@ import Api from '@/api'
 export default {
   state: {
     videos: [],
-    activeVideoFile: '',
+    activeVideoId: '',
     reqData: {
       sDef: {
         sSortCriterias: [{sSort: 1}] /* {name: desc} */,
@@ -17,14 +17,14 @@ export default {
   },
   actions: {
     LOAD_ACTIVE_VIDEO_FILE: ({dispatch}) => {
-      if (localStorage.getItem('iws-app.activeVideoFile')) {
+      if (localStorage.getItem('iws-app.activeVideoId')) {
         try {
-          const id = JSON.parse(localStorage.getItem('iws-app.activeVideoFile'))
+          const id = JSON.parse(localStorage.getItem('iws-app.activeVideoId'))
           if (id !== {}) {
             dispatch('SET_ACTIVE_VIDEO', id)
           }
         } catch (e) {
-          localStorage.removeItem('iws-app.activeVideoFile')
+          localStorage.removeItem('iws-app.activeVideoId')
         }
       }
     },
@@ -42,14 +42,14 @@ export default {
         // dispatch('ERROR', null, { root: true })
       }
     },
-    SET_ACTIVE_VIDEO: ({commit, dispatch}, fileName) => {
-      commit('SET_ACTIVE_VIDEO', fileName)
+    SET_ACTIVE_VIDEO: ({commit, dispatch}, id) => {
+      commit('SET_ACTIVE_VIDEO', id)
       dispatch('SAVE_VIDEOS_STATE')
     },
     SAVE_VIDEOS_STATE: ({state}) => {
       localStorage.setItem(
         'iws-app.activeVideoFile',
-        JSON.stringify(state.activeVideoFile)
+        JSON.stringify(state.activeVideoId)
       )
     }
   },
@@ -58,11 +58,12 @@ export default {
       console.log('SET_VIDEO_LIST=', videoList)
       state.videos = [...videoList]
     },
-    SET_ACTIVE_VIDEO: (state, fileName) => {
-      state.activeVideoFile = fileName
+    SET_ACTIVE_VIDEO: (state, id) => {
+      state.activeVideoId = id
     }
   },
   getters: {
-    videos: state => state.videos
+    videos: state => state.videos,
+    activeVideoId: state => state.activeVideoId
   }
 }

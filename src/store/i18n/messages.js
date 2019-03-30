@@ -5,6 +5,7 @@ const messages = {
       company: 'Co mgmt',
       comp_add: 'Add Co',
       comp_videos: 'Videos',
+      comp_resumes: 'Resumes',
       email: 'Mail BOX',
       email_make: 'template Make',
       email_check: 'template Ckeck',
@@ -58,6 +59,7 @@ const messages = {
       company_id: 'Company ID',
       company_name: 'Company name',
       view: 'View',
+      check: 'Check',
       video_format: 'Format'
     },
     message: {
@@ -82,7 +84,7 @@ const messages = {
       register: 'Register',
       change: 'Change',
       send: 'Send',
-      storageVideo: 'Storage Video',
+      storageVideoCapacity: 'Storage video capacity',
       forgot_pass: 'Forgot ID/password',
       mail_address: 'Mail Address'
     }

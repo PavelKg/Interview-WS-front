@@ -115,6 +115,7 @@ export default {
     border-bottom: 2px solid #dee2e6;
     background: #6e6e70;
     color: #ffffff;
+    text-align: center;
   }
   tr {
     background: #ffffff;

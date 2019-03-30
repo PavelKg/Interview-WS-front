@@ -1,12 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
-import Home from './home'
-// import Applicant from '../hub/'
-// import Management from '../hub/'
 import Hub from '../hub/'
 import Login from './login'
-import NotFound from '../components/NotFound.vue'
 
 Vue.use(Router)
 
@@ -17,11 +13,11 @@ const ifNotAuthenticated = (to, from, next) => {
   }
   const isAuth = store.getters.authStatus === 'success'
   if (isAuth) {
-    next(`/${store.getters.user_role}`)
+    next(`/hub/${store.getters.user_role}`)
   } else {
     store.commit('SET_HEADER_AUTH')
     store.dispatch('GET_USER_INFO').then(() => {
-      next(`/${store.getters.user_role}`)
+      next(`/hub/${store.getters.user_role}`)
     }, () => {
       next(`/error`)
     })

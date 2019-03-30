@@ -35,7 +35,6 @@ export default {
   mounted() {},
   methods: {
     menuHandleClick(node, myKey) {
-      console.log('menu item click=', node, myKey)
       switch (myKey) {
         case 'root.subItems.company.subItems.videos':
           this.$store.commit('SET_ACTIVE_COMPANY', '')

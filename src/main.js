@@ -8,6 +8,10 @@ import VueI18n from 'vue-i18n'
 import messages from './store/i18n/messages'
 import dirClickOutside from './directive/click-outside'
 import Notifications from 'vue-notification'
+import BootstrapVue from 'bootstrap-vue'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(VueI18n)
 const i18n = new VueI18n({
@@ -18,6 +22,7 @@ const i18n = new VueI18n({
 })
 
 Vue.use(Notifications)
+Vue.use(BootstrapVue)
 
 Vue.directive('click-outside', dirClickOutside)
 require('es6-promise').polyfill()

@@ -99,7 +99,6 @@ export default {
       } else {
         return {}
       }
-
     },
     companyById: state => companyId => {
       return state.companies.find(comp => {

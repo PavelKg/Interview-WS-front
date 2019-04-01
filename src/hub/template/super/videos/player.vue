@@ -1,38 +1,48 @@
 <template>
   <div class="browse-video-area">
+    <div class="zone-company-info">
+      <p>{{companyInfo}}</p>
+      <p>{{fileInfo}}</p>
+    </div>
     <div class='player-zone'>
       <video ref="videoPlayer" controls></video>
-      <div class="player-zone-company-info">
-        <p></p>
-        <p>https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8</p>
-      </div>
     </div>
     <div class='player-link-zone'>
-      <span>Back to the company page</span>
-      <span>Back to the HOME</span>
+      <a href='#' @click="activateContent(videoCompanyId, 'root.subItems.company.subItems.info')">Back to the company page</a>
+      <a href='#' @click="activateContent(0, 'root.subItems.home')">Back to the HOME</a>
     </div>
   </div>  
 </template>
 
 <script>
 import Hls from 'hls.js'
+import {mapGetters} from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['videos']),
+    ...mapGetters(['activeVideoInfo']),
     videoInfo() {
-      return this.videos[0]
-    },
-    companyInfo() {
-      if (this.activeCompanyId) {
-        const compInfo = this.companyById(this.activeCompanyId)
-        return `ID: ${compInfo.cid} / ${compInfo.name}`.toUpperCase()
-      } else {
-        return false
+      if (this.activeVideoInfo) {
+        return this.activeVideoInfo
       }
     },
+    companyInfo() {
+      const info = this.videoInfo
+      return `ID: ${info.company_cid} / ${info.company_name}`.toUpperCase()
+    },
+    videoCompanyId() {
+      return this.videoInfo.company_id
+    },
+    fileInfo() {
+      return this.videoInfo.filename
+    }
   },
+
   mounted() {
+    if (!this.activeVideoInfo.id) {
+      this.$store.dispatch('LOAD_ACTIVE_VIDEO_FILE')
+    }
+    
     let video = this.$refs.videoPlayer;
     if(Hls.isSupported()) {
       console.log("hello hls.js!");
@@ -53,6 +63,19 @@ export default {
         source.type = type;
         element.appendChild(source);
       }
+  },
+  methods: {
+    activateContent(contentId, key) {
+      console.log('contentId=', contentId)
+      switch (key) {
+        case 'root.subItems.company.subItems.info':
+          this.$store.commit('SET_ACTIVE_COMPANY', contentId)
+          break
+        default:
+          break
+      }
+      this.$emit('contentElementClick', key)
+    },
   } 
 }
 </script>
@@ -61,16 +84,16 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    .zone-company-info {
+      padding-left: 20px;
+    }
     .player-zone {
       display: flex;
       flex-direction: row;
       padding: 20px;
       video {
-        max-width: 870px;
-        max-height: 500px;
-      }
-      .player-zone-company-info {
-        padding: 0 40px ;
+        width: 870px;
+        height: 500px;
       }
     }
     .player-link-zone {

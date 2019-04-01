@@ -3,7 +3,7 @@
     <div class='header-zone'><headerArea/></div>      
     <div class='menu-zone' v-if="!isSmallScreen || isMenuVisible"><menuArea/></div>
     <div class='body'>
-      <div class='content-zone' v-if="!isLoadCompany ">
+      <div class='content-zone' v-if="!isLoadCompany">
         <component :is="component" v-if="component" />
         <!--superContent/-->
         </div>

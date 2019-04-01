@@ -47,6 +47,11 @@ const menuStructure = {
               caption: 'menu.comp_videos',
               visible: true
             },
+            resumes: {
+              type: 'company.resumes',
+              caption: 'menu.comp_resumes',
+              visible: true
+            },
             player: {
               type: 'company.player',
               caption: 'menu.comp_player'

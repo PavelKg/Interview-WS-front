@@ -88,20 +88,16 @@ export default {
   },
   methods: {
     activateContent(contentId, key) {
-      let reqConstr
+      console.log('contentId==',contentId)
       switch (key) {
         case 'root.subItems.company.subItems.info':
           this.$store.commit('SET_ACTIVE_COMPANY', contentId)
           break
         case 'root.subItems.company.subItems.player':
           this.$store.dispatch('SET_ACTIVE_VIDEO', contentId)
-          reqConstr = {field: 'video_id', cond: '=', val: contentId}
-          this.$store.dispatch('GET_VIDEO_LIST', [reqConstr])
           break
         default:
           this.$store.dispatch('SET_ACTIVE_VIDEO', contentId)
-          reqConstr = {field: 'video_id', cond: '=', val: contentId}
-          this.$store.dispatch('GET_VIDEO_LIST', [reqConstr])
           break
       }
       this.$emit('contentElementClick', key)

@@ -62,6 +62,13 @@ const messages = {
       check: 'Check',
       video_format: 'Format'
     },
+    resumes: {
+      check: 'Check',
+      rid: 'ID',
+      sub_date: 'Submission date/time',
+      resume_link: 'Resume link',
+      contact: 'Applicant contact'
+    },
     message: {
       appHeader: 'Online Interview',
       company_id: 'Company ID',
@@ -77,6 +84,7 @@ const messages = {
     label: {
       companyList: 'Company List',
       administratorList: 'List of Administrators',
+      resumesList: 'List of Resumes',
       delete: 'Delete',
       back: 'Back',
       edit: 'Edit',

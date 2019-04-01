@@ -11,7 +11,7 @@
   import root_company_edit from './company/edit'
   import root_company_add from './company/edit'
   import root_company_videos from './videos/list'
-  import root_company_resumes from './videos/list'
+  import root_company_resumes from './resumes/list'
   import root_company_player from './videos/player'
   import root_email_check from './mail/check'
   import root_email_make from './mail/make'

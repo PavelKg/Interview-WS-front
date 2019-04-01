@@ -105,15 +105,15 @@ export default {
     }
   } 
   @media (max-width: 768px) {
-      video {
-        width: 350px;
+    .browse-video-area .player-zone video {
+        width: 100%;
         height: 250px;
-      }
+    }
   } 
   @media (max-width: 400px) {
-      video {
-        width: 200px;
+    .browse-video-area .player-zone video {
+        width: 100%;
         height: 150px;
-      }
+    }
   }   
 </style>
